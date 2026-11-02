@@ -50,15 +50,39 @@ G.manager/
         │       ├── 001_initial_schema.up.sql
         │       └── 001_initial_schema.down.sql
         ├── controllers/
+        │   ├── auth.controller.js      # Register, login, getMe
         │   └── health.controller.js
         ├── middlewares/
-        │   └── errorHandler.js     # 404 & centralized error handler
+        │   ├── auth.middleware.js      # JWT Bearer protection & req.user attachment
+        │   └── errorHandler.js         # 404 & centralized error handler
         ├── routes/
-        │   ├── index.js            # Central API router (/api/*)
-        │   └── health.routes.js    # GET /api/health
+        │   ├── index.js                # Central API router (/api/*)
+        │   ├── auth.routes.js          # /api/auth endpoints
+        │   └── health.routes.js        # GET /api/health
         └── utils/
             ├── ApiError.js
-            └── asyncHandler.js
+            ├── asyncHandler.js
+            └── jwt.js                  # JWT token signing & verification
+    └── tests/
+        └── auth.test.js                # Automated auth test suite
+```
+
+---
+
+## 🔐 Auth API Endpoints (GM-7)
+
+| Method | Endpoint | Access | Body / Headers | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Public | `{ name, email, password, gym_name? }` | Register a new gym owner, hashes password, returns user profile + JWT |
+| `POST` | `/api/auth/login` | Public | `{ email, password }` | Authenticate owner with email & password, returns user profile + JWT |
+| `GET` | `/api/auth/me` | Protected | Header: `Authorization: Bearer <token>` | Returns profile of currently authenticated owner |
+
+### Protecting Other Routes
+Import `authMiddleware` (or `protect`) and pass it before route handlers:
+```js
+import { authMiddleware } from '../middlewares/auth.middleware.js';
+
+router.get('/members', authMiddleware, getMembers);
 ```
 
 ---
