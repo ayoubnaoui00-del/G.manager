@@ -3,10 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>G.manager — Frosted Ice & Ocean Sapphire Prototype</title>
+  <title>G.manager — Dark Glassmorphism App Prototype</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Custom scrollbar for mobile container */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0B1230;
+    }
+    .font-mono-numbers {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Custom scrollbar */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -15,997 +26,1226 @@
       scrollbar-width: none;
     }
 
-    /* Light Theme Glassmorphism (Frosted Ice) */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 6px -2px rgba(15, 23, 42, 0.02), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
+    /* Core Dark Glassmorphism tokens */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 22px;
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
     }
 
     .glass-card-interactive {
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.75);
-      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 20px;
+      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+      transition: all 0.22s ease-in-out;
     }
     .glass-card-interactive:hover {
-      background: rgba(255, 255, 255, 0.92);
-      border-color: rgba(37, 99, 235, 0.3);
+      background: rgba(255, 255, 255, 0.13);
+      border-color: rgba(59, 107, 255, 0.6);
       transform: translateY(-2px);
-      box-shadow: 0 14px 28px -4px rgba(37, 99, 235, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 1);
+      box-shadow: 0 18px 36px -6px rgba(0, 0, 0, 0.6), 0 0 20px -2px rgba(59, 107, 255, 0.35);
     }
 
     .glass-input {
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.07);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(203, 213, 225, 0.7);
-      box-shadow: inset 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      color: #FFFFFF;
+      transition: all 0.2s ease;
     }
     .glass-input:focus {
-      background: rgba(255, 255, 255, 0.95);
-      border-color: rgba(37, 99, 235, 0.6);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12), inset 0 1px 2px 0 rgba(15, 23, 42, 0.02);
+      background: rgba(255, 255, 255, 0.12);
+      border-color: #3B6BFF;
+      box-shadow: 0 0 16px rgba(59, 107, 255, 0.45);
     }
 
-    /* Ambient background gradient & floating glass orbs */
-    .ice-canvas {
-      background: linear-gradient(135deg, #f0f4f9 0%, #e8eef6 50%, #f4f7fb 100%);
+    /* Primary Electric Blue Glow */
+    .btn-electric-blue {
+      background: #3B6BFF;
+      box-shadow: 0 0 22px rgba(59, 107, 255, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      transition: all 0.2s ease;
+    }
+    .btn-electric-blue:hover {
+      background: #4F7CFF;
+      box-shadow: 0 0 30px rgba(59, 107, 255, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      transform: translateY(-1px);
     }
 
-    @keyframes float-gentle {
-      0%, 100% { transform: translateY(0px) scale(1); }
-      50% { transform: translateY(-10px) scale(1.03); }
+    /* Floating Glass Navigation Bar */
+    .floating-glass-nav {
+      background: rgba(11, 18, 48, 0.78);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 28px;
+      box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.75), 0 0 25px rgba(59, 107, 255, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3);
     }
-    .animate-float-slow {
-      animation: float-gentle 8s ease-in-out infinite;
+
+    /* Moody Athlete Background with Navy Overlay & Neon Light Streaks */
+    .dark-athlete-bg {
+      background-color: #0B1230;
+      background-image: 
+        radial-gradient(ellipse 70% 50% at 20% 20%, rgba(59, 107, 255, 0.28), transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(37, 99, 235, 0.22), transparent 70%),
+        linear-gradient(180deg, rgba(11, 18, 48, 0.88) 0%, rgba(11, 18, 48, 0.94) 60%, #0B1230 100%),
+        url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
     }
   </style>
 </head>
-<body class="ice-canvas text-slate-800 min-h-screen flex flex-col items-center justify-center p-2 sm:p-6 antialiased selection:bg-blue-600 selection:text-white relative overflow-x-hidden">
+<body class="bg-[#0B1230] text-white min-h-screen flex flex-col items-center justify-start p-3 sm:p-6 antialiased selection:bg-[#3B6BFF] selection:text-white relative overflow-x-hidden">
 
-  <!-- Soft Ambient Spheres for Frosted Glass Refraction -->
-  <div class="fixed top-[-5%] left-[5%] w-[420px] h-[420px] rounded-full bg-gradient-to-tr from-blue-300/35 to-indigo-200/25 blur-[90px] pointer-events-none -z-10 animate-float-slow"></div>
-  <div class="fixed bottom-[-5%] right-[5%] w-[480px] h-[480px] rounded-full bg-gradient-to-bl from-sky-200/40 to-teal-200/30 blur-[100px] pointer-events-none -z-10 animate-float-slow" style="animation-delay: -4s;"></div>
-  <div class="fixed top-[45%] right-[15%] w-[300px] h-[300px] rounded-full bg-slate-200/50 blur-[80px] pointer-events-none -z-10"></div>
+  <!-- Ambient Neon Light Streaks in Background -->
+  <div class="fixed top-[-8%] left-[10%] w-[520px] h-[520px] rounded-full bg-blue-600/20 blur-[130px] pointer-events-none -z-10"></div>
+  <div class="fixed bottom-[5%] right-[5%] w-[480px] h-[480px] rounded-full bg-indigo-700/20 blur-[140px] pointer-events-none -z-10"></div>
 
-  <!-- Pitch Header & Controls -->
-  <header class="w-full max-w-5xl mb-4 flex flex-wrap items-center justify-between gap-3 px-3">
+  <!-- Master Pitch Toolbar -->
+  <header class="w-full max-w-6xl mb-5 flex flex-wrap items-center justify-between gap-4 px-2">
     <div class="flex items-center gap-3">
-      <!-- Clean Sapphire Logo -->
-      <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center font-black text-xl text-white shadow-md shadow-blue-500/20">
+      <div class="w-11 h-11 rounded-2xl bg-[#3B6BFF] flex items-center justify-center font-black text-xl text-white shadow-[0_0_20px_rgba(59,107,255,0.6)]">
         G
       </div>
       <div>
         <div class="flex items-center gap-2">
-          <h1 class="text-xl font-extrabold tracking-tight text-slate-900 flex items-center gap-2">
-            G.manager
-            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 shadow-sm">
-              Light Glass v2
-            </span>
-          </h1>
+          <h1 class="text-xl font-bold tracking-tight text-white">G.manager</h1>
+          <span class="px-2.5 py-0.5 text-xs font-semibold bg-[#3B6BFF]/20 text-[#3B6BFF] border border-[#3B6BFF]/40 rounded-full shadow-[0_0_12px_rgba(59,107,255,0.3)]">
+            Dark Glassmorphism UI
+          </span>
         </div>
-        <p class="text-xs text-slate-500 font-medium">Gym Subscription Management • <span class="text-blue-600 font-semibold">Frosted Ice & Ocean Sapphire</span></p>
+        <p class="text-xs text-slate-300 font-light">Owner: <strong class="text-white font-medium">Iron Forge Gym</strong> • 390×844 Mobile Frames (8px Grid)</p>
       </div>
     </div>
 
-    <!-- Presentation Controls -->
+    <!-- View Mode Switcher -->
     <div class="flex items-center gap-2">
-      <button id="toggle-device-btn" onclick="toggleDeviceFrame()" class="px-3.5 py-1.5 text-xs font-semibold bg-white/80 hover:bg-white text-slate-700 border border-slate-200/80 hover:border-blue-400 rounded-xl backdrop-blur-md transition-all flex items-center gap-1.5 shadow-sm">
-        <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-        <span>Toggle Frame / Full View</span>
+      <button id="view-interactive-btn" onclick="setViewMode('interactive')" class="px-3.5 py-1.5 text-xs font-semibold bg-[#3B6BFF] text-white rounded-xl shadow-[0_0_16px_rgba(59,107,255,0.4)] transition">
+        📱 Interactive Simulator
       </button>
-
-      <button onclick="resetDemoData()" class="px-3.5 py-1.5 text-xs font-semibold bg-white/80 hover:bg-white text-slate-700 border border-slate-200/80 hover:border-slate-300 rounded-xl backdrop-blur-md transition-all flex items-center gap-1.5 shadow-sm">
-        <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-        Reset Data
+      <button id="view-grid-btn" onclick="setViewMode('grid')" class="px-3.5 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/15 text-slate-200 border border-white/20 rounded-xl backdrop-blur-md transition">
+        🖼️ All 4 Screens (Figma Grid)
       </button>
-
-      <div class="px-3 py-1.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-xl font-medium text-xs flex items-center gap-2 shadow-sm">
-        <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-        Pitch Ready
-      </div>
+      <button onclick="resetDemoData()" class="px-3 py-1.5 text-xs font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 rounded-xl backdrop-blur-md transition">
+        Reset
+      </button>
     </div>
   </header>
 
-  <!-- Interactive Mobile Device Simulator (Titanium / Ice Chassis) -->
-  <main id="device-container" class="relative w-full max-w-[400px] h-[820px] bg-slate-50/70 border-[8px] border-slate-200/90 rounded-[48px] shadow-[0_25px_60px_-15px_rgba(15,23,42,0.18),0_0_0_1px_rgba(255,255,255,0.8)] backdrop-blur-2xl flex flex-col overflow-hidden transition-all duration-300">
+  <!-- ============================================================ -->
+  <!-- VIEW 1: INTERACTIVE SMARTPHONE SIMULATOR (Default) -->
+  <!-- ============================================================ -->
+  <section id="interactive-view" class="w-full flex justify-center pb-8">
     
-    <!-- Phone Top Notch / Dynamic Island & Status Bar -->
-    <div class="w-full bg-white/40 backdrop-blur-md text-slate-700 pt-3 pb-2 px-6 flex justify-between items-center z-30 select-none text-xs border-b border-slate-200/40">
-      <span class="font-bold text-slate-800 tracking-tight" id="current-clock">09:41</span>
+    <!-- 390x844 Exact Mobile Frame -->
+    <div class="relative w-[390px] h-[844px] dark-athlete-bg border-[8px] border-slate-700/70 rounded-[48px] shadow-[0_25px_80px_rgba(0,0,0,0.8),0_0_45px_rgba(59,107,255,0.22)] overflow-hidden flex flex-col select-none">
       
-      <!-- Dynamic Island Pill -->
-      <div class="h-4.5 w-24 bg-slate-900 rounded-full flex items-center justify-center gap-1.5 px-2 shadow-sm">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-        <span class="text-[9px] font-mono text-slate-300 font-medium">G.manager</span>
-      </div>
-
-      <div class="flex items-center gap-1.5 text-slate-600">
-        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zm6-4a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zm6-3a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
-        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.077 13.308-5.077 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zm-2.829 2.828a3 3 0 00-4.242 0 1 1 0 01-1.415-1.414 5 5 0 017.072 0 1 1 0 01-1.415 1.414zM9 16a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/></svg>
-        <div class="w-5 h-2.5 border border-slate-500 rounded-sm p-0.5 flex items-center">
-          <div class="h-full w-full bg-slate-800 rounded-2xs"></div>
+      <!-- Top Status Bar & Dynamic Island -->
+      <div class="w-full pt-3 pb-1 px-7 flex justify-between items-center text-xs text-slate-300 z-30">
+        <span class="font-bold text-white tracking-tight" id="sim-clock">09:41</span>
+        
+        <!-- Dynamic Island -->
+        <div class="h-4.5 w-24 bg-black/90 border border-white/10 rounded-full flex items-center justify-center gap-1.5 px-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#4ADE80]"></span>
+          <span class="text-[9px] font-mono text-slate-300">G.manager</span>
         </div>
-      </div>
-    </div>
 
-    <!-- App Top Bar (Frosted Glass Header) -->
-    <div class="px-5 py-3.5 bg-white/60 backdrop-blur-xl border-b border-slate-200/60 flex items-center justify-between z-20">
-      <div class="flex items-center gap-3">
-        <!-- Clean Avatar -->
-        <div class="relative">
-          <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-bold text-white text-xs shadow-sm">
-            EA
+        <div class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zm6-4a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zm6-3a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.077 13.308-5.077 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zm-2.829 2.828a3 3 0 00-4.242 0 1 1 0 01-1.415-1.414 5 5 0 017.072 0 1 1 0 01-1.415 1.414zM9 16a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/></svg>
+          <div class="w-5 h-2.5 border border-slate-300 rounded-sm p-0.5 flex items-center">
+            <div class="h-full w-full bg-[#4ADE80] rounded-2xs"></div>
           </div>
-          <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white shadow-sm"></span>
-        </div>
-
-        <div>
-          <div class="text-[10px] font-semibold uppercase tracking-wider text-blue-600">
-            Gym Owner
-          </div>
-          <h2 class="text-sm font-bold text-slate-900 tracking-tight flex items-center gap-1.5">
-            Iron Forge Gym
-            <svg class="w-3.5 h-3.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-          </h2>
         </div>
       </div>
 
-      <div class="flex items-center gap-2">
-        <button onclick="triggerNotificationToast()" class="relative p-2 rounded-xl bg-white/70 hover:bg-white text-slate-600 border border-slate-200/60 transition-colors shadow-sm">
+      <!-- App Header: avatar EA, GYM OWNER label, Iron Forge Gym + verified badge, notification bell + blue dot -->
+      <div class="px-5 py-3 flex items-center justify-between border-b border-white/10 z-20">
+        <div class="flex items-center gap-3">
+          <!-- Avatar "EA" with green online dot -->
+          <div class="relative">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-700 via-indigo-600 to-[#3B6BFF] p-[1.5px] shadow-[0_0_12px_rgba(59,107,255,0.4)]">
+              <div class="w-full h-full rounded-full bg-[#0B1230]/90 flex items-center justify-center font-bold text-white text-xs">
+                EA
+              </div>
+            </div>
+            <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-[#4ADE80] border-2 border-[#0B1230] shadow-[0_0_8px_rgba(74,222,128,0.8)]"></span>
+          </div>
+
+          <div>
+            <div class="text-[10px] font-light uppercase tracking-wider text-slate-300">
+              GYM OWNER
+            </div>
+            <h2 class="text-sm font-bold text-white tracking-tight flex items-center gap-1.5">
+              Iron Forge Gym
+              <svg class="w-4 h-4 text-[#3B6BFF]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            </h2>
+          </div>
+        </div>
+
+        <!-- Notification Bell with Electric Blue Dot -->
+        <button onclick="showToast('3 Members have subscriptions expiring today')" class="relative p-2 rounded-xl bg-white/10 hover:bg-white/15 text-slate-200 border border-white/20 transition-colors">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-600"></span>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#3B6BFF] shadow-[0_0_8px_rgba(59,107,255,0.9)] animate-pulse"></span>
         </button>
       </div>
-    </div>
 
-    <!-- Scrollable Screen Content Body -->
-    <div id="screen-container" class="flex-1 overflow-y-auto no-scrollbar pb-24 relative bg-slate-50/40">
-      
-      <!-- ============================================================ -->
-      <!-- TAB 1: DASHBOARD -->
-      <!-- ============================================================ -->
-      <section id="tab-dashboard" class="p-4 space-y-4">
+      <!-- Scrollable Main Content -->
+      <div id="sim-screen-container" class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-4 pb-24">
         
-        <!-- Hero Frosted Glass Revenue Card -->
-        <div class="p-5 rounded-3xl glass-card relative overflow-hidden">
-          <div class="flex justify-between items-start">
-            <div>
-              <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Monthly Performance</span>
-              <h3 class="text-3xl font-extrabold text-slate-900 mt-1 tracking-tight" id="dash-revenue">
-                $14,250
-              </h3>
-              <div class="flex items-center gap-2 mt-1.5">
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
-                  ↑ +18.4%
+        <!-- ==================== SCREEN 1: DASHBOARD ==================== -->
+        <div id="screen-dashboard" class="space-y-4">
+          
+          <!-- MONTHLY PERFORMANCE Card -->
+          <div class="glass-panel p-5 relative overflow-hidden">
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="text-[10px] font-light uppercase tracking-wider text-slate-300">
+                  MONTHLY PERFORMANCE
                 </span>
-                <span class="text-[11px] text-slate-500">vs last month</span>
+                <h3 class="text-3xl font-extrabold text-white mt-1 font-mono-numbers" id="dash-rev-val">
+                  $14,250
+                </h3>
+                <div class="flex items-center gap-2 mt-2">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#4ADE80]/15 text-[#4ADE80] border border-[#4ADE80]/30 shadow-[0_0_8px_rgba(74,222,128,0.2)]">
+                    +18.4% vs last month
+                  </span>
+                </div>
+              </div>
+
+              <!-- Active Gym chip -->
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
+                Active Gym
+              </span>
+            </div>
+
+            <!-- 3 Buttons: + Member (filled blue, glow), + Payment, Plans (glass) -->
+            <div class="grid grid-cols-3 gap-2 mt-5 pt-3.5 border-t border-white/15">
+              <button onclick="openModal('add-member-modal')" class="py-2.5 px-2 rounded-2xl btn-electric-blue text-white font-bold text-xs flex flex-col items-center justify-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                <span>+ Member</span>
+              </button>
+
+              <button onclick="openModal('record-payment-modal')" class="py-2.5 px-2 rounded-2xl glass-card-interactive text-white font-semibold text-xs flex flex-col items-center justify-center gap-1">
+                <svg class="w-4 h-4 text-[#3B6BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>+ Payment</span>
+              </button>
+
+              <button onclick="switchTab('plans')" class="py-2.5 px-2 rounded-2xl glass-card-interactive text-white font-semibold text-xs flex flex-col items-center justify-center gap-1">
+                <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                <span>Plans</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Two Glass Stat Cards -->
+          <div class="grid grid-cols-2 gap-3">
+            <!-- Stat 1: ACTIVE MEMBERS 248 (+12 this week) -->
+            <div class="glass-panel p-4">
+              <span class="text-[10px] font-light uppercase tracking-wider text-slate-300">
+                ACTIVE MEMBERS
+              </span>
+              <h4 class="text-2xl font-bold text-white mt-1 font-mono-numbers" id="dash-active-count">
+                248
+              </h4>
+              <p class="text-[10px] text-[#4ADE80] font-medium mt-1">
+                +12 this week
+              </p>
+            </div>
+
+            <!-- Stat 2: EXPIRING < 7D 14 (Tap to renew →) with amber warning icon -->
+            <div onclick="filterMembers('expiring'); switchTab('members');" class="glass-panel p-4 cursor-pointer hover:border-[#FBBF24]/50 transition">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-light uppercase tracking-wider text-[#FBBF24]">
+                  EXPIRING &lt; 7D
+                </span>
+                <svg class="w-3.5 h-3.5 text-[#FBBF24]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+              </div>
+              <h4 class="text-2xl font-bold text-[#FBBF24] mt-1 font-mono-numbers">
+                14
+              </h4>
+              <p class="text-[10px] text-[#FBBF24] font-medium mt-1 underline">
+                Tap to renew →
+              </p>
+            </div>
+          </div>
+
+          <!-- Amber Glass Alert Banner -->
+          <div class="p-3.5 rounded-2xl bg-[#FBBF24]/10 border border-[#FBBF24]/30 backdrop-blur-md flex items-center justify-between shadow-[0_0_15px_rgba(251,191,36,0.15)]">
+            <div class="flex items-center gap-2.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#FBBF24] shadow-[0_0_8px_rgba(251,191,36,0.8)] animate-pulse"></div>
+              <div>
+                <p class="text-xs font-bold text-[#FBBF24]">3 Subscriptions Expire Today</p>
+                <p class="text-[10px] text-slate-300 font-light">Send WhatsApp reminder with 1 click</p>
+              </div>
+            </div>
+            <button onclick="showToast('WhatsApp renewal reminder sent to 3 members!')" class="px-3 py-1.5 rounded-xl bg-[#FBBF24] hover:bg-[#F59E0B] text-slate-950 font-bold text-xs transition shadow-sm">
+              Notify
+            </button>
+          </div>
+
+          <!-- RECENT ACTIVITY list with "View Ledger →" -->
+          <div class="space-y-2.5">
+            <div class="flex justify-between items-center px-1">
+              <span class="text-[11px] font-light text-slate-300 uppercase tracking-wider">
+                RECENT ACTIVITY
+              </span>
+              <span onclick="switchTab('ledger')" class="text-xs text-[#3B6BFF] hover:underline font-semibold cursor-pointer">
+                View Ledger →
+              </span>
+            </div>
+
+            <!-- Activity Item 1 -->
+            <div class="glass-card-interactive p-3.5 flex items-center justify-between">
+              <div>
+                <h5 class="text-xs font-bold text-white">Karim Benali</h5>
+                <p class="text-[11px] text-slate-300 font-light mt-0.5">3 Months Pro • Cash</p>
+              </div>
+              <div class="text-right">
+                <span class="text-xs font-bold text-[#4ADE80] font-mono-numbers">+$90</span>
+                <p class="text-[10px] text-slate-400 font-mono-numbers">Today 09:15 AM</p>
               </div>
             </div>
 
-            <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-              Active Gym
-            </span>
-          </div>
-
-          <!-- Quick Action Buttons -->
-          <div class="grid grid-cols-3 gap-2 mt-5 pt-3.5 border-t border-slate-200/60">
-            <button onclick="openModal('add-member-modal')" class="py-2.5 px-2 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex flex-col items-center justify-center gap-1 transition-all shadow-md shadow-blue-600/20 active:scale-98">
-              <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
-              <span>+ Member</span>
-            </button>
-
-            <button onclick="openModal('record-payment-modal')" class="py-2.5 px-2 rounded-2xl glass-card-interactive text-slate-800 font-semibold text-xs flex flex-col items-center justify-center gap-1">
-              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              <span>+ Payment</span>
-            </button>
-
-            <button onclick="switchTab('plans')" class="py-2.5 px-2 rounded-2xl glass-card-interactive text-slate-800 font-semibold text-xs flex flex-col items-center justify-center gap-1">
-              <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-              <span>Plans</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Metric KPI Cards (Dual Glass Grid) -->
-        <div class="grid grid-cols-2 gap-3">
-          <!-- Active Members -->
-          <div class="p-4 rounded-3xl glass-card">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Active Members</span>
-              <div class="w-7 h-7 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <!-- Activity Item 2 -->
+            <div class="glass-card-interactive p-3.5 flex items-center justify-between">
+              <div>
+                <h5 class="text-xs font-bold text-white">Mehdi Alami</h5>
+                <p class="text-[11px] text-slate-300 font-light mt-0.5">3 Months Pro • Card</p>
+              </div>
+              <div class="text-right">
+                <span class="text-xs font-bold text-[#4ADE80] font-mono-numbers">+$90</span>
+                <p class="text-[10px] text-slate-400 font-mono-numbers">Yesterday</p>
               </div>
             </div>
-            <h4 class="text-2xl font-bold text-slate-900 tracking-tight" id="dash-active-count">248</h4>
-            <p class="text-[10px] text-emerald-600 font-semibold mt-0.5">
-              +12 this week
-            </p>
           </div>
 
-          <!-- Expiring Soon Warning -->
-          <div onclick="filterMembers('expiring'); switchTab('members');" class="p-4 rounded-3xl glass-card cursor-pointer hover:border-amber-300 transition">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[11px] font-semibold text-amber-700 uppercase tracking-wider">Expiring &lt; 7d</span>
-              <div class="w-7 h-7 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              </div>
-            </div>
-            <h4 class="text-2xl font-bold text-amber-800 tracking-tight" id="dash-expiring-count">14</h4>
-            <p class="text-[10px] text-amber-600 font-medium mt-0.5 underline">
-              Tap to renew →
-            </p>
-          </div>
         </div>
 
-        <!-- Expiration Alert Banner -->
-        <div class="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 backdrop-blur-xl flex items-center justify-between shadow-sm">
-          <div class="flex items-center gap-3">
-            <div class="w-2.5 h-2.5 rounded-full bg-amber-500"></div>
-            <div>
-              <p class="text-xs font-bold text-amber-900">3 Subscriptions Expire Today</p>
-              <p class="text-[10px] text-amber-700">Send WhatsApp reminder with 1 click</p>
-            </div>
-          </div>
-          <button onclick="showToast('WhatsApp renewal link sent to expiring members!')" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs transition shadow-sm">
-            Notify
-          </button>
-        </div>
-
-        <!-- Recent Activity Feed -->
-        <div class="space-y-2.5">
-          <div class="flex justify-between items-center px-1">
-            <h4 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-              Recent Activity
-            </h4>
-            <span class="text-xs text-blue-600 hover:text-blue-700 font-semibold cursor-pointer" onclick="switchTab('payments')">View Ledger →</span>
-          </div>
-
-          <div id="recent-activity-list" class="space-y-2">
-            <!-- Dynamically populated -->
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ============================================================ -->
-      <!-- TAB 2: MEMBERS -->
-      <!-- ============================================================ -->
-      <section id="tab-members" class="p-4 space-y-3.5 hidden">
-        
-        <!-- Search and Filter Bar -->
-        <div class="space-y-2.5">
+        <!-- ==================== SCREEN 2: MEMBERS ==================== -->
+        <div id="screen-members" class="space-y-3.5 hidden">
+          
+          <!-- Glass Search Bar -->
           <div class="relative">
-            <svg class="w-4 h-4 absolute left-3.5 top-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <svg class="w-4 h-4 absolute left-3.5 top-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             <input 
-              id="member-search-input" 
+              id="member-search-input"
               type="text" 
               placeholder="Search member name or phone..." 
               oninput="handleMemberSearch(this.value)"
-              class="w-full glass-input text-slate-900 rounded-2xl pl-10 pr-4 py-2.5 text-xs focus:outline-none transition placeholder-slate-400"
+              class="w-full glass-input pl-10 pr-4 py-2.5 text-xs placeholder-slate-400"
             >
           </div>
 
-          <!-- Status Filter Pills -->
-          <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-            <button onclick="filterMembers('all')" id="filter-all" class="filter-pill active px-3.5 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm transition">
-              All (<span id="count-all">6</span>)
-            </button>
-            <button onclick="filterMembers('active')" id="filter-active" class="filter-pill px-3 py-1.5 rounded-xl text-xs font-medium bg-white/70 text-slate-600 border border-slate-200/70 hover:bg-white transition">
-              Active (<span id="count-active">4</span>)
-            </button>
-            <button onclick="filterMembers('expiring')" id="filter-expiring" class="filter-pill px-3 py-1.5 rounded-xl text-xs font-medium bg-white/70 text-slate-600 border border-slate-200/70 hover:bg-white transition">
-              Expiring (<span id="count-expiring">1</span>)
-            </button>
-            <button onclick="filterMembers('expired')" id="filter-expired" class="filter-pill px-3 py-1.5 rounded-xl text-xs font-medium bg-white/70 text-slate-600 border border-slate-200/70 hover:bg-white transition">
-              Expired (<span id="count-expired">1</span>)
+          <!-- Filter Chips & + New Member Link -->
+          <div class="flex items-center justify-between gap-1 overflow-x-auto no-scrollbar py-0.5">
+            <div class="flex items-center gap-1.5">
+              <button onclick="filterMembers('all')" id="filter-all" class="filter-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#3B6BFF] text-white shadow-[0_0_12px_rgba(59,107,255,0.4)]">
+                All (6)
+              </button>
+              <button onclick="filterMembers('active')" id="filter-active" class="filter-chip px-3 py-1.5 rounded-xl text-xs font-medium bg-white/10 text-slate-300 border border-white/20 hover:text-white">
+                Active (4)
+              </button>
+              <button onclick="filterMembers('expiring')" id="filter-expiring" class="filter-chip px-3 py-1.5 rounded-xl text-xs font-medium bg-white/10 text-slate-300 border border-white/20 hover:text-white">
+                Expiring (1)
+              </button>
+              <button onclick="filterMembers('expired')" id="filter-expired" class="filter-chip px-3 py-1.5 rounded-xl text-xs font-medium bg-white/10 text-slate-300 border border-white/20 hover:text-white">
+                Expired (1)
+              </button>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center px-1 text-xs">
+            <span class="text-slate-400 font-light">6 registered gym members</span>
+            <button onclick="openModal('add-member-modal')" class="text-[#3B6BFF] font-semibold hover:underline flex items-center gap-1">
+              + New Member
             </button>
           </div>
-        </div>
 
-        <!-- Members Count Summary -->
-        <div class="flex items-center justify-between px-1 text-[11px] text-slate-500">
-          <span id="members-list-subtitle">Showing 6 gym members</span>
-          <button onclick="openModal('add-member-modal')" class="text-blue-600 font-bold hover:underline flex items-center gap-1">
-            + New Member
-          </button>
-        </div>
-
-        <!-- Members Card List -->
-        <div id="members-cards-container" class="space-y-2.5">
-          <!-- Populated by JavaScript -->
-        </div>
-
-      </section>
-
-      <!-- ============================================================ -->
-      <!-- TAB 3: PLANS & SUBSCRIPTIONS -->
-      <!-- ============================================================ -->
-      <section id="tab-plans" class="p-4 space-y-4 hidden">
-        <div class="flex justify-between items-center">
-          <div>
-            <h3 class="text-sm font-extrabold text-slate-900">Membership Tiers</h3>
-            <p class="text-xs text-slate-500">Configured gym packages & pricing</p>
+          <!-- 6 Member Cards Container -->
+          <div id="members-list-container" class="space-y-2.5">
+            <!-- Dynamically populated from JS array -->
           </div>
-          <button onclick="showToast('Custom plan creator available in Pro dashboard')" class="px-3 py-1.5 text-xs bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl font-semibold shadow-sm">
-            + Custom Plan
-          </button>
+
         </div>
 
-        <div class="space-y-3.5">
-          <!-- Plan 1 -->
-          <div class="p-4.5 rounded-3xl glass-card relative overflow-hidden">
+        <!-- ==================== SCREEN 3: PLANS (Membership Tiers) ==================== -->
+        <div id="screen-plans" class="space-y-4 hidden">
+          
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="text-base font-bold text-white">Membership Tiers</h3>
+              <p class="text-xs text-slate-300 font-light">Configured gym packages & pricing</p>
+            </div>
+            <button onclick="showToast('Custom plan creator available in pro dashboard')" class="px-3 py-1.5 text-xs bg-white/10 hover:bg-white/15 text-slate-200 border border-white/20 rounded-xl font-medium">
+              + Custom Plan
+            </button>
+          </div>
+
+          <!-- Tier 1: Monthly Fitness -->
+          <div class="glass-panel p-4.5 space-y-3">
             <div class="flex justify-between items-start">
               <div>
-                <span class="px-2 py-0.5 text-[9px] font-bold bg-slate-100 text-slate-600 rounded-md uppercase">Standard</span>
-                <h4 class="text-base font-bold text-slate-900 mt-1.5">Monthly Fitness</h4>
-                <p class="text-xs text-slate-500 mt-0.5">30 Days Full Gym Access + Locker</p>
+                <span class="px-2 py-0.5 rounded-md text-[9px] font-mono font-bold bg-white/15 text-slate-300 uppercase tracking-wider">
+                  STANDARD
+                </span>
+                <h4 class="text-base font-bold text-white mt-1">Monthly Fitness</h4>
+                <p class="text-xs text-slate-300 font-light">30 Days Full Gym Access + Locker</p>
               </div>
               <div class="text-right">
-                <span class="text-2xl font-black text-slate-900 font-mono">$35</span>
-                <span class="text-xs text-slate-500">/mo</span>
+                <span class="text-2xl font-black text-white font-mono-numbers">$35</span>
+                <span class="text-xs text-slate-400 font-light">/mo</span>
               </div>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-200/60 flex items-center justify-between text-xs text-slate-500">
-              <span>Subscribers: <strong class="text-slate-800">142 members</strong></span>
-              <button onclick="quickAssignPlan('Monthly Fitness', 35)" class="px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold transition">
+
+            <div class="pt-3 border-t border-white/15 flex items-center justify-between text-xs text-slate-300">
+              <span class="font-light">142 subscribers</span>
+              <button onclick="quickAssign('Monthly Fitness', 35)" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-semibold transition">
                 Assign Plan
               </button>
             </div>
           </div>
 
-          <!-- Plan 2 (Popular Highlight) -->
-          <div class="p-5 rounded-3xl glass-card relative overflow-hidden border-blue-300 shadow-md">
-            <span class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-black px-3.5 py-1 rounded-bl-2xl uppercase tracking-wider">
+          <!-- Tier 2: 3 Months Pro (MOST POPULAR) - filled blue, slight glow, slightly larger -->
+          <div class="glass-panel p-5 space-y-3.5 border-[#3B6BFF]/60 shadow-[0_0_30px_rgba(59,107,255,0.3)] relative overflow-hidden scale-[1.01]">
+            <span class="absolute top-0 right-0 bg-[#3B6BFF] text-white text-[9px] font-black px-3.5 py-1 rounded-bl-2xl uppercase tracking-wider shadow">
               ★ MOST POPULAR
             </span>
+
             <div class="flex justify-between items-start pt-1">
               <div>
-                <span class="px-2 py-0.5 text-[9px] font-bold bg-blue-50 text-blue-700 rounded-md uppercase">Quarterly</span>
-                <h4 class="text-lg font-black text-slate-900 mt-1.5">3 Months Pro</h4>
-                <p class="text-xs text-slate-500 mt-0.5">90 Days Gym + Free Sauna Session</p>
+                <span class="px-2 py-0.5 rounded-md text-[9px] font-mono font-bold bg-[#3B6BFF]/30 text-white uppercase tracking-wider">
+                  QUARTERLY
+                </span>
+                <h4 class="text-lg font-black text-white mt-1">3 Months Pro</h4>
+                <p class="text-xs text-slate-300 font-light">90 Days Gym + Free Sauna Session</p>
               </div>
-              <div class="text-right pt-3">
-                <span class="text-2xl font-black text-blue-600 font-mono">$90</span>
-                <span class="text-xs text-slate-500">/3mo</span>
+              <div class="text-right pt-2">
+                <span class="text-2xl font-black text-white font-mono-numbers">$90</span>
+                <span class="text-xs text-slate-400 font-light">/3mo</span>
               </div>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-200/60 flex items-center justify-between text-xs text-slate-500">
-              <span>Subscribers: <strong class="text-slate-800">76 members</strong></span>
-              <button onclick="quickAssignPlan('3 Months Pro', 90)" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-sm">
+
+            <div class="pt-3 border-t border-white/15 flex items-center justify-between text-xs text-slate-300">
+              <span class="font-light">76 subscribers</span>
+              <button onclick="quickAssign('3 Months Pro', 90)" class="px-4 py-2 rounded-xl btn-electric-blue text-white text-xs font-bold transition shadow-md shadow-blue-600/30">
                 Assign Plan
               </button>
             </div>
           </div>
 
-          <!-- Plan 3 (VIP Annual) -->
-          <div class="p-4.5 rounded-3xl glass-card relative overflow-hidden">
+          <!-- Tier 3: 1 Year Champion -->
+          <div class="glass-panel p-4.5 space-y-3">
             <div class="flex justify-between items-start">
               <div>
-                <span class="px-2 py-0.5 text-[9px] font-bold bg-indigo-50 text-indigo-700 rounded-md uppercase">VIP Annual</span>
-                <h4 class="text-base font-bold text-slate-900 mt-1.5">1 Year Champion</h4>
-                <p class="text-xs text-slate-500 mt-0.5">365 Days Access + 2 PT Sessions</p>
+                <span class="px-2 py-0.5 rounded-md text-[9px] font-mono font-bold bg-white/15 text-slate-300 uppercase tracking-wider">
+                  VIP ANNUAL
+                </span>
+                <h4 class="text-base font-bold text-white mt-1">1 Year Champion</h4>
+                <p class="text-xs text-slate-300 font-light">365 Days Access + 2 PT Sessions</p>
               </div>
               <div class="text-right">
-                <span class="text-2xl font-black text-slate-900 font-mono">$320</span>
-                <span class="text-xs text-slate-500">/yr</span>
+                <span class="text-2xl font-black text-white font-mono-numbers">$320</span>
+                <span class="text-xs text-slate-400 font-light">/yr</span>
               </div>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-200/60 flex items-center justify-between text-xs text-slate-500">
-              <span>Subscribers: <strong class="text-slate-800">30 members</strong></span>
-              <button onclick="quickAssignPlan('1 Year Champion', 320)" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+
+            <div class="pt-3 border-t border-white/15 flex items-center justify-between text-xs text-slate-300">
+              <span class="font-light">30 subscribers</span>
+              <button onclick="quickAssign('1 Year Champion', 320)" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-semibold transition">
                 Assign Plan
               </button>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- ============================================================ -->
-      <!-- TAB 4: PAYMENTS & REVENUE -->
-      <!-- ============================================================ -->
-      <section id="tab-payments" class="p-4 space-y-4 hidden">
-        <div class="flex justify-between items-center">
-          <div>
-            <h3 class="text-sm font-extrabold text-slate-900">Payment Ledger</h3>
-            <p class="text-xs text-slate-500">Cash, Card, & Wire transactions</p>
+        </div>
+
+        <!-- ==================== SCREEN 4: LEDGER ==================== -->
+        <div id="screen-ledger" class="space-y-4 hidden">
+          
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="text-base font-bold text-white">Payment Ledger</h3>
+              <p class="text-xs text-slate-300 font-light">Cash, Card, & Wire transactions</p>
+            </div>
+            <button onclick="openModal('record-payment-modal')" class="px-3.5 py-1.5 text-xs btn-electric-blue text-white rounded-xl font-bold shadow-md">
+              + Record
+            </button>
           </div>
-          <button onclick="openModal('record-payment-modal')" class="px-3 py-1.5 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-sm transition">
-            + Record
+
+          <!-- 3 Glass Summary Cards: Cash $8,420 / Card $4,330 / Wire $1,500 -->
+          <div class="grid grid-cols-3 gap-2">
+            <div class="glass-panel p-3 text-center">
+              <span class="text-[10px] font-light text-slate-300 uppercase">Cash</span>
+              <div class="text-sm font-bold text-white mt-0.5 font-mono-numbers">$8,420</div>
+            </div>
+            <div class="glass-panel p-3 text-center">
+              <span class="text-[10px] font-light text-slate-300 uppercase">Card</span>
+              <div class="text-sm font-bold text-white mt-0.5 font-mono-numbers">$4,330</div>
+            </div>
+            <div class="glass-panel p-3 text-center">
+              <span class="text-[10px] font-light text-slate-300 uppercase">Wire</span>
+              <div class="text-sm font-bold text-white mt-0.5 font-mono-numbers">$1,500</div>
+            </div>
+          </div>
+
+          <!-- TRANSACTIONS - 5 records list with method chip -->
+          <div class="space-y-2.5">
+            <div class="flex justify-between items-center px-1">
+              <span class="text-[11px] font-light text-slate-300 uppercase tracking-wider">
+                TRANSACTIONS — 5 records
+              </span>
+            </div>
+
+            <div id="ledger-transactions-list" class="space-y-2">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Floating Glass Bottom Navigation Bar (active highlighted in electric blue #3B6BFF) -->
+      <div class="absolute bottom-4 left-4 right-4 z-40">
+        <nav class="floating-glass-nav h-16 flex items-center justify-around px-2">
+          
+          <!-- Tab 1: Dashboard -->
+          <button onclick="switchTab('dashboard')" id="nav-btn-dashboard" class="nav-item flex flex-col items-center justify-center gap-1 w-16 text-[#3B6BFF]">
+            <svg class="w-5 h-5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            <span class="text-[10px] font-bold tracking-tight">Dashboard</span>
           </button>
-        </div>
 
-        <!-- Payment Breakdown Cards -->
-        <div class="grid grid-cols-3 gap-2.5">
-          <div class="p-3 rounded-2xl glass-card text-center">
-            <span class="text-[10px] font-semibold text-slate-500 uppercase">Cash</span>
-            <div class="text-sm font-bold text-slate-900 mt-1 font-mono">$8,420</div>
-          </div>
-          <div class="p-3 rounded-2xl glass-card text-center">
-            <span class="text-[10px] font-semibold text-slate-500 uppercase">Card</span>
-            <div class="text-sm font-bold text-slate-900 mt-1 font-mono">$4,330</div>
-          </div>
-          <div class="p-3 rounded-2xl glass-card text-center">
-            <span class="text-[10px] font-semibold text-slate-500 uppercase">Wire</span>
-            <div class="text-sm font-bold text-slate-900 mt-1 font-mono">$1,500</div>
-          </div>
-        </div>
+          <!-- Tab 2: Members -->
+          <button onclick="switchTab('members')" id="nav-btn-members" class="nav-item flex flex-col items-center justify-center gap-1 w-16 text-slate-400 hover:text-white transition">
+            <svg class="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <span class="text-[10px] font-medium tracking-tight">Members</span>
+          </button>
 
-        <!-- Transactions List -->
-        <div class="space-y-2.5">
-          <div class="flex justify-between items-center px-1">
-            <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Transactions</span>
-            <span class="text-[10px] font-semibold text-blue-600" id="payment-tx-count">6 records</span>
-          </div>
+          <!-- Tab 3: Plans -->
+          <button onclick="switchTab('plans')" id="nav-btn-plans" class="nav-item flex flex-col items-center justify-center gap-1 w-16 text-slate-400 hover:text-white transition">
+            <svg class="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            <span class="text-[10px] font-medium tracking-tight">Plans</span>
+          </button>
 
-          <div id="payments-history-list" class="space-y-2">
-            <!-- Dynamically populated -->
-          </div>
-        </div>
-      </section>
+          <!-- Tab 4: Ledger -->
+          <button onclick="switchTab('ledger')" id="nav-btn-ledger" class="nav-item flex flex-col items-center justify-center gap-1 w-16 text-slate-400 hover:text-white transition">
+            <svg class="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            <span class="text-[10px] font-medium tracking-tight">Ledger</span>
+          </button>
 
-    </div>
-
-    <!-- Mobile Bottom Navigation Bar (Frosted Glass) -->
-    <nav class="absolute bottom-0 left-0 right-0 h-16 bg-white/75 backdrop-blur-2xl border-t border-slate-200/70 flex items-center justify-around px-2 z-30 select-none">
-      
-      <!-- Dashboard Tab -->
-      <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn active flex flex-col items-center justify-center gap-1 w-16 py-1 text-blue-600 transition-all">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-        <span class="text-[10px] font-bold tracking-tight">Dashboard</span>
-      </button>
-
-      <!-- Members Tab -->
-      <button onclick="switchTab('members')" id="nav-members" class="nav-btn flex flex-col items-center justify-center gap-1 w-16 py-1 text-slate-400 hover:text-slate-600 transition-all">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-        <span class="text-[10px] font-medium tracking-tight">Members</span>
-      </button>
-
-      <!-- Plans Tab -->
-      <button onclick="switchTab('plans')" id="nav-plans" class="nav-btn flex flex-col items-center justify-center gap-1 w-16 py-1 text-slate-400 hover:text-slate-600 transition-all">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-        <span class="text-[10px] font-medium tracking-tight">Plans</span>
-      </button>
-
-      <!-- Payments Tab -->
-      <button onclick="switchTab('payments')" id="nav-payments" class="nav-btn flex flex-col items-center justify-center gap-1 w-16 py-1 text-slate-400 hover:text-slate-600 transition-all">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-        <span class="text-[10px] font-medium tracking-tight">Ledger</span>
-      </button>
-
-    </nav>
-
-    <!-- Floating Clean Toast Notification -->
-    <div id="toast-notification" class="absolute top-16 left-4 right-4 bg-white/95 border border-slate-200/90 backdrop-blur-2xl text-slate-800 font-bold text-xs px-4 py-3 rounded-2xl shadow-xl flex items-center justify-between opacity-0 pointer-events-none transition-all duration-300 z-50">
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-        <span id="toast-message">Operation successful</span>
+        </nav>
       </div>
-      <button onclick="hideToast()" class="text-slate-400 hover:text-slate-600 font-bold ml-2">✕</button>
-    </div>
 
-    <!-- ============================================================ -->
-    <!-- MODAL 1: ADD MEMBER (Frosted Glass Sheet) -->
-    <!-- ============================================================ -->
-    <div id="add-member-modal" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden flex items-end justify-center">
-      <div class="w-full bg-white/90 border-t border-slate-200 rounded-t-[36px] p-5 space-y-3.5 max-h-[85%] overflow-y-auto shadow-2xl">
-        <div class="flex justify-between items-center">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-            Register New Member
-          </h3>
-          <button onclick="closeModal('add-member-modal')" class="text-slate-400 hover:text-slate-700 p-1">✕</button>
-        </div>
-
-        <form id="add-member-form" onsubmit="submitNewMember(event)" class="space-y-3 text-xs">
-          <div>
-            <label class="block text-slate-600 font-medium mb-1">Full Name *</label>
-            <input id="new-member-name" required type="text" placeholder="e.g. Youssef El Mansouri" class="w-full glass-input text-slate-900 rounded-xl px-3.5 py-2.5 focus:outline-none transition">
-          </div>
-
-          <div>
-            <label class="block text-slate-600 font-medium mb-1">Phone Number *</label>
-            <input id="new-member-phone" required type="tel" placeholder="+212 600 123456" class="w-full glass-input text-slate-900 rounded-xl px-3.5 py-2.5 focus:outline-none transition">
-          </div>
-
-          <div>
-            <label class="block text-slate-600 font-medium mb-1">Select Membership Plan</label>
-            <select id="new-member-plan" class="w-full glass-input text-slate-900 rounded-xl px-3.5 py-2.5 focus:outline-none transition">
-              <option value="Monthly Fitness ($35)">Monthly Fitness — $35 / 30 days</option>
-              <option value="3 Months Pro ($90)" selected>3 Months Pro — $90 / 90 days (Popular)</option>
-              <option value="1 Year Champion ($320)">1 Year Champion — $320 / 365 days (VIP)</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-slate-600 font-medium mb-1">Payment Method</label>
-            <div class="grid grid-cols-3 gap-2">
-              <label class="flex items-center justify-center gap-1.5 p-2 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 cursor-pointer transition">
-                <input type="radio" name="pay-method" value="Cash" checked class="accent-blue-600">
-                <span class="text-slate-700 font-semibold">Cash</span>
-              </label>
-              <label class="flex items-center justify-center gap-1.5 p-2 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 cursor-pointer transition">
-                <input type="radio" name="pay-method" value="Card" class="accent-blue-600">
-                <span class="text-slate-700 font-semibold">Card</span>
-              </label>
-              <label class="flex items-center justify-center gap-1.5 p-2 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 cursor-pointer transition">
-                <input type="radio" name="pay-method" value="Transfer" class="accent-blue-600">
-                <span class="text-slate-700 font-semibold">Wire</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="pt-2 flex gap-2">
-            <button type="button" onclick="closeModal('add-member-modal')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition">
-              Cancel
-            </button>
-            <button type="submit" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md shadow-blue-600/20 transition">
-              Save & Activate
-            </button>
-          </div>
-        </form>
+      <!-- Toast Notification -->
+      <div id="toast-notification" class="absolute top-16 left-4 right-4 glass-panel bg-[#0B1230]/90 border-[#3B6BFF]/40 text-white font-semibold text-xs px-4 py-3 shadow-[0_0_25px_rgba(59,107,255,0.4)] flex items-center justify-between opacity-0 pointer-events-none transition-all duration-300 z-50">
+        <span id="toast-message">Success</span>
+        <button onclick="hideToast()" class="text-slate-400 hover:text-white ml-2">✕</button>
       </div>
-    </div>
 
-    <!-- ============================================================ -->
-    <!-- MODAL 2: RECORD PAYMENT / RENEWAL -->
-    <!-- ============================================================ -->
-    <div id="record-payment-modal" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden flex items-end justify-center">
-      <div class="w-full bg-white/90 border-t border-slate-200 rounded-t-[36px] p-5 space-y-3.5 max-h-[85%] overflow-y-auto shadow-2xl">
-        <div class="flex justify-between items-center">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-            Record Membership Payment
-          </h3>
-          <button onclick="closeModal('record-payment-modal')" class="text-slate-400 hover:text-slate-700 p-1">✕</button>
-        </div>
-
-        <form onsubmit="submitPayment(event)" class="space-y-3 text-xs">
-          <div>
-            <label class="block text-slate-600 font-medium mb-1">Select Member</label>
-            <select id="payment-member-select" class="w-full glass-input text-slate-900 rounded-xl px-3.5 py-2.5 focus:outline-none transition"></select>
+      <!-- MODAL: ADD MEMBER -->
+      <div id="add-member-modal" class="absolute inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-end justify-center">
+        <div class="w-full glass-panel bg-[#0B1230]/90 border-t border-white/20 rounded-t-[32px] p-5 space-y-3.5 max-h-[85%] overflow-y-auto">
+          <div class="flex justify-between items-center">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#3B6BFF]"></span>
+              Add New Member
+            </h3>
+            <button onclick="closeModal('add-member-modal')" class="text-slate-400 hover:text-white">✕</button>
           </div>
 
-          <div class="grid grid-cols-2 gap-2">
+          <form onsubmit="submitNewMember(event)" class="space-y-3 text-xs">
             <div>
-              <label class="block text-slate-600 font-medium mb-1">Amount ($ USD)</label>
-              <input id="payment-amount" type="number" value="35" min="5" step="5" required class="w-full glass-input text-slate-900 rounded-xl px-3.5 py-2.5 focus:outline-none transition font-mono font-bold text-blue-600">
+              <label class="block text-slate-300 font-light mb-1">Full Name</label>
+              <input id="input-member-name" required type="text" placeholder="e.g. Youssef El Mansouri" class="w-full glass-input px-3.5 py-2.5">
             </div>
+
             <div>
-              <label class="block text-slate-600 font-medium mb-1">Extension</label>
-              <select id="payment-extend-days" class="w-full glass-input text-slate-900 rounded-xl px-3.5 py-2.5 focus:outline-none transition">
-                <option value="30">+30 Days</option>
-                <option value="90">+90 Days</option>
-                <option value="365">+1 Year</option>
+              <label class="block text-slate-300 font-light mb-1">Phone Number</label>
+              <input id="input-member-phone" required type="tel" placeholder="+212 600 123456" class="w-full glass-input px-3.5 py-2.5">
+            </div>
+
+            <div>
+              <label class="block text-slate-300 font-light mb-1">Plan</label>
+              <select id="input-member-plan" class="w-full glass-input px-3.5 py-2.5 bg-[#0B1230]">
+                <option value="Monthly Fitness">Monthly Fitness ($35/mo)</option>
+                <option value="3 Months Pro" selected>3 Months Pro ($90/3mo)</option>
+                <option value="1 Year Champion">1 Year Champion ($320/yr)</option>
               </select>
             </div>
-          </div>
 
-          <div>
-            <label class="block text-slate-600 font-medium mb-1">Payment Method</label>
-            <select id="payment-method-select" class="w-full glass-input text-slate-900 rounded-xl px-3.5 py-2.5 focus:outline-none transition">
-              <option value="Cash">Cash (Gym Counter)</option>
-              <option value="Card">Credit / Debit Card</option>
-              <option value="Transfer">Bank Transfer</option>
-            </select>
-          </div>
-
-          <div class="pt-2 flex gap-2">
-            <button type="button" onclick="closeModal('record-payment-modal')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition">
-              Cancel
-            </button>
-            <button type="submit" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md shadow-blue-600/20 transition">
-              Confirm Payment
-            </button>
-          </div>
-        </form>
+            <div class="pt-2 flex gap-2">
+              <button type="button" onclick="closeModal('add-member-modal')" class="flex-1 py-2.5 bg-white/10 text-slate-300 font-medium rounded-xl">Cancel</button>
+              <button type="submit" class="flex-1 py-2.5 btn-electric-blue text-white font-bold rounded-xl">Save & Activate</button>
+            </div>
+          </form>
+        </div>
       </div>
+
+      <!-- MODAL: RECORD PAYMENT -->
+      <div id="record-payment-modal" class="absolute inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-end justify-center">
+        <div class="w-full glass-panel bg-[#0B1230]/90 border-t border-white/20 rounded-t-[32px] p-5 space-y-3.5 max-h-[85%] overflow-y-auto">
+          <div class="flex justify-between items-center">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#4ADE80]"></span>
+              Record Payment
+            </h3>
+            <button onclick="closeModal('record-payment-modal')" class="text-slate-400 hover:text-white">✕</button>
+          </div>
+
+          <form onsubmit="submitPayment(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block text-slate-300 font-light mb-1">Member</label>
+              <select id="select-payment-member" class="w-full glass-input px-3.5 py-2.5 bg-[#0B1230]"></select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-slate-300 font-light mb-1">Amount ($)</label>
+                <input id="input-payment-amount" type="number" value="90" required class="w-full glass-input px-3.5 py-2.5 font-mono-numbers">
+              </div>
+              <div>
+                <label class="block text-slate-300 font-light mb-1">Method</label>
+                <select id="select-payment-method" class="w-full glass-input px-3.5 py-2.5 bg-[#0B1230]">
+                  <option value="Cash">Cash</option>
+                  <option value="Card">Card</option>
+                  <option value="Wire">Wire</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="pt-2 flex gap-2">
+              <button type="button" onclick="closeModal('record-payment-modal')" class="flex-1 py-2.5 bg-white/10 text-slate-300 font-medium rounded-xl">Cancel</button>
+              <button type="submit" class="flex-1 py-2.5 btn-electric-blue text-white font-bold rounded-xl">Confirm</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
     </div>
 
-    <!-- ============================================================ -->
-    <!-- MODAL 3: MEMBER DETAIL SHEET -->
-    <!-- ============================================================ -->
-    <div id="member-detail-modal" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden flex items-end justify-center">
-      <div class="w-full bg-white/95 border-t border-slate-200 rounded-t-[36px] p-5 space-y-4 max-h-[90%] overflow-y-auto shadow-2xl">
-        <div class="flex justify-between items-start">
-          <div class="flex items-center gap-3">
-            <div id="modal-member-avatar" class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-700 border border-blue-100 flex items-center justify-center text-lg font-bold shadow-sm">
-              Y
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- VIEW 2: ALL 4 MOBILE FRAMES (390x844 Side-by-Side Figma Showcase) -->
+  <!-- ============================================================ -->
+  <section id="grid-view" class="w-full max-w-7xl hidden pb-12">
+    <div class="mb-4 text-center">
+      <h2 class="text-lg font-bold text-white">All 4 Screens • 390×844 Mobile Frames (8px Grid)</h2>
+      <p class="text-xs text-slate-400 font-light">Exact layout, dark glassmorphism styling, and verified structure</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 justify-items-center">
+      
+      <!-- FRAME 1: DASHBOARD -->
+      <div class="w-[390px] h-[844px] dark-athlete-bg border-[6px] border-slate-700/80 rounded-[44px] shadow-2xl overflow-hidden flex flex-col relative select-none">
+        <!-- Top bar -->
+        <div class="px-5 py-3 border-b border-white/10 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="relative w-8 h-8 rounded-full bg-[#3B6BFF] flex items-center justify-center font-bold text-xs">
+              EA
+              <span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#4ADE80] border border-[#0B1230]"></span>
             </div>
             <div>
-              <h3 id="modal-member-name" class="text-base font-bold text-slate-900">Youssef Mansouri</h3>
-              <p id="modal-member-phone" class="text-xs text-slate-500 font-mono">+212 612 345678</p>
+              <div class="text-[9px] font-light uppercase tracking-wider text-slate-300">GYM OWNER</div>
+              <div class="text-xs font-bold text-white flex items-center gap-1">Iron Forge Gym <span class="text-[#3B6BFF]">✓</span></div>
             </div>
           </div>
-          <button onclick="closeModal('member-detail-modal')" class="text-slate-400 hover:text-slate-700 p-1">✕</button>
+          <div class="relative p-1.5 rounded-lg bg-white/10"><span class="w-2 h-2 rounded-full bg-[#3B6BFF] absolute top-1 right-1"></span>🔔</div>
         </div>
 
-        <!-- Status Card -->
-        <div class="p-4 glass-card rounded-2xl space-y-2.5">
-          <div class="flex justify-between items-center text-xs">
-            <span class="text-slate-500 font-medium">Subscription Status:</span>
-            <span id="modal-member-badge" class="px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200">ACTIVE</span>
+        <div class="flex-1 overflow-y-auto no-scrollbar p-3.5 space-y-3">
+          <div class="glass-panel p-4 space-y-2">
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="text-[9px] font-light text-slate-300 uppercase">MONTHLY PERFORMANCE</span>
+                <div class="text-2xl font-bold font-mono-numbers">$14,250</div>
+                <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#4ADE80]/15 text-[#4ADE80] border border-[#4ADE80]/30">+18.4% vs last month</span>
+              </div>
+              <span class="px-2 py-0.5 text-[9px] bg-white/10 rounded-full border border-white/20">Active Gym</span>
+            </div>
+            <div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-white/10 text-[10px]">
+              <span class="py-2 text-center rounded-xl btn-electric-blue font-bold">+ Member</span>
+              <span class="py-2 text-center rounded-xl glass-card-interactive font-semibold">+ Payment</span>
+              <span class="py-2 text-center rounded-xl glass-card-interactive font-semibold">Plans</span>
+            </div>
           </div>
-          <div class="flex justify-between items-center text-xs">
-            <span class="text-slate-500 font-medium">Active Package:</span>
-            <span id="modal-member-plan" class="text-slate-800 font-semibold">3 Months Pro</span>
+
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="glass-panel p-3">
+              <span class="text-[9px] font-light text-slate-300">ACTIVE MEMBERS</span>
+              <div class="text-xl font-bold font-mono-numbers">248</div>
+              <span class="text-[9px] text-[#4ADE80]">+12 this week</span>
+            </div>
+            <div class="glass-panel p-3 border-[#FBBF24]/30">
+              <span class="text-[9px] font-light text-[#FBBF24]">EXPIRING &lt; 7D</span>
+              <div class="text-xl font-bold text-[#FBBF24] font-mono-numbers">14</div>
+              <span class="text-[9px] text-[#FBBF24] underline">Tap to renew →</span>
+            </div>
           </div>
-          <div class="flex justify-between items-center text-xs">
-            <span class="text-slate-500 font-medium">Valid Until:</span>
-            <span id="modal-member-date" class="text-blue-600 font-mono font-bold">Nov 28, 2026</span>
+
+          <div class="p-3 rounded-2xl bg-[#FBBF24]/10 border border-[#FBBF24]/30 flex justify-between items-center text-xs">
+            <div>
+              <p class="font-bold text-[#FBBF24] text-[11px]">3 Subscriptions Expire Today</p>
+              <p class="text-[9px] text-slate-300 font-light">Send WhatsApp reminder with 1 click</p>
+            </div>
+            <span class="px-2 py-1 bg-[#FBBF24] text-slate-950 font-bold rounded-lg text-[10px]">Notify</span>
+          </div>
+
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-[10px] text-slate-300 px-1">
+              <span>RECENT ACTIVITY</span>
+              <span class="text-[#3B6BFF]">View Ledger →</span>
+            </div>
+            <div class="glass-card-interactive p-2.5 flex justify-between text-xs">
+              <div><strong class="text-white text-xs">Karim Benali</strong><p class="text-[10px] text-slate-300 font-light">3 Months Pro • Cash</p></div>
+              <div class="text-right text-[#4ADE80] font-mono-numbers font-bold">+$90<p class="text-[9px] text-slate-400">Today 09:15 AM</p></div>
+            </div>
+            <div class="glass-card-interactive p-2.5 flex justify-between text-xs">
+              <div><strong class="text-white text-xs">Mehdi Alami</strong><p class="text-[10px] text-slate-300 font-light">3 Months Pro • Card</p></div>
+              <div class="text-right text-[#4ADE80] font-mono-numbers font-bold">+$90<p class="text-[9px] text-slate-400">Yesterday</p></div>
+            </div>
           </div>
         </div>
 
-        <!-- Quick Actions Inside Detail -->
-        <div class="grid grid-cols-2 gap-2 text-xs">
-          <button id="modal-renew-btn" onclick="openRenewalForCurrentMember()" class="py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition shadow-md shadow-blue-600/20">
-            ⚡ Quick Renew
-          </button>
-          <button onclick="showToast('WhatsApp reminder sent to member!')" class="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition">
-            💬 WhatsApp
-          </button>
+        <div class="p-2 border-t border-white/10 bg-[#0B1230]/80 flex justify-around text-[10px]">
+          <span class="text-[#3B6BFF] font-bold">● Dashboard</span>
+          <span class="text-slate-400">Members</span>
+          <span class="text-slate-400">Plans</span>
+          <span class="text-slate-400">Ledger</span>
         </div>
+      </div>
+
+      <!-- FRAME 2: MEMBERS -->
+      <div class="w-[390px] h-[844px] dark-athlete-bg border-[6px] border-slate-700/80 rounded-[44px] shadow-2xl overflow-hidden flex flex-col relative select-none">
+        <div class="px-5 py-3 border-b border-white/10 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="relative w-8 h-8 rounded-full bg-[#3B6BFF] flex items-center justify-center font-bold text-xs">EA<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#4ADE80] border border-[#0B1230]"></span></div>
+            <div>
+              <div class="text-[9px] font-light uppercase tracking-wider text-slate-300">GYM OWNER</div>
+              <div class="text-xs font-bold text-white flex items-center gap-1">Iron Forge Gym <span class="text-[#3B6BFF]">✓</span></div>
+            </div>
+          </div>
+          <div class="relative p-1.5 rounded-lg bg-white/10"><span class="w-2 h-2 rounded-full bg-[#3B6BFF] absolute top-1 right-1"></span>🔔</div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto no-scrollbar p-3.5 space-y-2.5 text-xs">
+          <input disabled value="Search member name or phone..." class="w-full glass-input px-3 py-2 text-xs text-slate-400">
+          <div class="flex gap-1 text-[10px]">
+            <span class="px-2.5 py-1 bg-[#3B6BFF] rounded-lg font-bold">All (6)</span>
+            <span class="px-2 py-1 bg-white/10 rounded-lg">Active (4)</span>
+            <span class="px-2 py-1 bg-white/10 rounded-lg">Expiring (1)</span>
+            <span class="px-2 py-1 bg-white/10 rounded-lg">Expired (1)</span>
+          </div>
+
+          <!-- Cards -->
+          <div class="glass-card-interactive p-2.5 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center font-bold">K</span>
+              <div><strong class="text-white text-xs">Karim Benali</strong><p class="text-[10px] text-slate-300 font-light">3 Months Pro • +212 661 223344</p></div>
+            </div>
+            <div class="text-right"><span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#4ADE80]/15 text-[#4ADE80] border border-[#4ADE80]/30">ACTIVE</span><p class="text-[9px] text-slate-400 font-mono-numbers">Dec 15 2026</p></div>
+          </div>
+
+          <div class="glass-card-interactive p-2.5 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center font-bold">S</span>
+              <div><strong class="text-white text-xs">Sara Tazi</strong><p class="text-[10px] text-slate-300 font-light">Monthly Fitness • +212 662 334455</p></div>
+            </div>
+            <div class="text-right"><span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#FBBF24]/15 text-[#FBBF24] border border-[#FBBF24]/30">EXPIRING</span><p class="text-[9px] text-slate-400 font-mono-numbers">Nov 04 2026</p></div>
+          </div>
+
+          <div class="glass-card-interactive p-2.5 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center font-bold">O</span>
+              <div><strong class="text-white text-xs">Omar Idrissi</strong><p class="text-[10px] text-slate-300 font-light">1 Year Champion • +212 663 445566</p></div>
+            </div>
+            <div class="text-right"><span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#4ADE80]/15 text-[#4ADE80] border border-[#4ADE80]/30">ACTIVE</span><p class="text-[9px] text-slate-400 font-mono-numbers">Jul 10 2027</p></div>
+          </div>
+
+          <div class="glass-card-interactive p-2.5 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center font-bold">F</span>
+              <div><strong class="text-white text-xs">Fatima Zahra</strong><p class="text-[10px] text-slate-300 font-light">Monthly Fitness • +212 664 556677</p></div>
+            </div>
+            <div class="text-right"><span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#F87171]/15 text-[#F87171] border border-[#F87171]/30">EXPIRED</span><p class="text-[9px] text-slate-400 font-mono-numbers">Oct 28 2026</p></div>
+          </div>
+
+          <div class="glass-card-interactive p-2.5 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center font-bold">M</span>
+              <div><strong class="text-white text-xs">Mehdi Alami</strong><p class="text-[10px] text-slate-300 font-light">3 Months Pro • +212 665 667788</p></div>
+            </div>
+            <div class="text-right"><span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#4ADE80]/15 text-[#4ADE80] border border-[#4ADE80]/30">ACTIVE</span><p class="text-[9px] text-slate-400 font-mono-numbers">Jan 20 2027</p></div>
+          </div>
+
+          <div class="glass-card-interactive p-2.5 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center font-bold">H</span>
+              <div><strong class="text-white text-xs">Hajar Chraibi</strong><p class="text-[10px] text-slate-300 font-light">Monthly Fitness • +212 666 778899</p></div>
+            </div>
+            <div class="text-right"><span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#4ADE80]/15 text-[#4ADE80] border border-[#4ADE80]/30">ACTIVE</span><p class="text-[9px] text-slate-400 font-mono-numbers">Nov 29 2026</p></div>
+          </div>
+        </div>
+
+        <div class="p-2 border-t border-white/10 bg-[#0B1230]/80 flex justify-around text-[10px]">
+          <span class="text-slate-400">Dashboard</span>
+          <span class="text-[#3B6BFF] font-bold">● Members</span>
+          <span class="text-slate-400">Plans</span>
+          <span class="text-slate-400">Ledger</span>
+        </div>
+      </div>
+
+      <!-- FRAME 3: PLANS -->
+      <div class="w-[390px] h-[844px] dark-athlete-bg border-[6px] border-slate-700/80 rounded-[44px] shadow-2xl overflow-hidden flex flex-col relative select-none">
+        <div class="px-5 py-3 border-b border-white/10 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="relative w-8 h-8 rounded-full bg-[#3B6BFF] flex items-center justify-center font-bold text-xs">EA<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#4ADE80] border border-[#0B1230]"></span></div>
+            <div>
+              <div class="text-[9px] font-light uppercase tracking-wider text-slate-300">GYM OWNER</div>
+              <div class="text-xs font-bold text-white flex items-center gap-1">Iron Forge Gym <span class="text-[#3B6BFF]">✓</span></div>
+            </div>
+          </div>
+          <div class="relative p-1.5 rounded-lg bg-white/10"><span class="w-2 h-2 rounded-full bg-[#3B6BFF] absolute top-1 right-1"></span>🔔</div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto no-scrollbar p-3.5 space-y-3 text-xs">
+          <div class="flex justify-between items-center">
+            <div><h3 class="font-bold text-white">Membership Tiers</h3><p class="text-[10px] text-slate-300 font-light">Configured gym packages & pricing</p></div>
+            <span class="px-2 py-1 bg-white/10 text-white rounded-lg text-[10px]">+ Custom Plan</span>
+          </div>
+
+          <!-- Tier 1 -->
+          <div class="glass-panel p-3.5 space-y-2">
+            <div class="flex justify-between">
+              <div><span class="text-[9px] bg-white/10 px-2 py-0.5 rounded font-mono font-bold">STANDARD</span><h4 class="font-bold text-white mt-1">Monthly Fitness</h4><p class="text-[10px] text-slate-300 font-light">30 Days Full Gym Access + Locker</p></div>
+              <div class="text-right font-mono-numbers text-xl font-bold">$35<span class="text-[9px] text-slate-400 font-light">/mo</span></div>
+            </div>
+            <div class="flex justify-between items-center pt-2 border-t border-white/10 text-[10px]">
+              <span class="text-slate-300 font-light">142 subscribers</span>
+              <span class="px-2.5 py-1 bg-white/10 rounded-lg font-semibold">Assign Plan</span>
+            </div>
+          </div>
+
+          <!-- Tier 2 Popular -->
+          <div class="glass-panel p-4 space-y-2.5 border-[#3B6BFF]/60 shadow-[0_0_20px_rgba(59,107,255,0.25)] relative overflow-hidden">
+            <span class="absolute top-0 right-0 bg-[#3B6BFF] text-white text-[8px] font-black px-2.5 py-0.5 rounded-bl-xl">★ MOST POPULAR</span>
+            <div class="flex justify-between pt-1">
+              <div><span class="text-[9px] bg-[#3B6BFF]/30 px-2 py-0.5 rounded font-mono font-bold">QUARTERLY</span><h4 class="font-black text-white mt-1">3 Months Pro</h4><p class="text-[10px] text-slate-300 font-light">90 Days Gym + Free Sauna Session</p></div>
+              <div class="text-right font-mono-numbers text-xl font-bold">$90<span class="text-[9px] text-slate-400 font-light">/3mo</span></div>
+            </div>
+            <div class="flex justify-between items-center pt-2 border-t border-white/10 text-[10px]">
+              <span class="text-slate-300 font-light">76 subscribers</span>
+              <span class="px-3 py-1 btn-electric-blue rounded-lg font-bold">Assign Plan</span>
+            </div>
+          </div>
+
+          <!-- Tier 3 -->
+          <div class="glass-panel p-3.5 space-y-2">
+            <div class="flex justify-between">
+              <div><span class="text-[9px] bg-white/10 px-2 py-0.5 rounded font-mono font-bold">VIP ANNUAL</span><h4 class="font-bold text-white mt-1">1 Year Champion</h4><p class="text-[10px] text-slate-300 font-light">365 Days Access + 2 PT Sessions</p></div>
+              <div class="text-right font-mono-numbers text-xl font-bold">$320<span class="text-[9px] text-slate-400 font-light">/yr</span></div>
+            </div>
+            <div class="flex justify-between items-center pt-2 border-t border-white/10 text-[10px]">
+              <span class="text-slate-300 font-light">30 subscribers</span>
+              <span class="px-2.5 py-1 bg-white/10 rounded-lg font-semibold">Assign Plan</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-2 border-t border-white/10 bg-[#0B1230]/80 flex justify-around text-[10px]">
+          <span class="text-slate-400">Dashboard</span>
+          <span class="text-slate-400">Members</span>
+          <span class="text-[#3B6BFF] font-bold">● Plans</span>
+          <span class="text-slate-400">Ledger</span>
+        </div>
+      </div>
+
+      <!-- FRAME 4: LEDGER -->
+      <div class="w-[390px] h-[844px] dark-athlete-bg border-[6px] border-slate-700/80 rounded-[44px] shadow-2xl overflow-hidden flex flex-col relative select-none">
+        <div class="px-5 py-3 border-b border-white/10 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="relative w-8 h-8 rounded-full bg-[#3B6BFF] flex items-center justify-center font-bold text-xs">EA<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#4ADE80] border border-[#0B1230]"></span></div>
+            <div>
+              <div class="text-[9px] font-light uppercase tracking-wider text-slate-300">GYM OWNER</div>
+              <div class="text-xs font-bold text-white flex items-center gap-1">Iron Forge Gym <span class="text-[#3B6BFF]">✓</span></div>
+            </div>
+          </div>
+          <div class="relative p-1.5 rounded-lg bg-white/10"><span class="w-2 h-2 rounded-full bg-[#3B6BFF] absolute top-1 right-1"></span>🔔</div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto no-scrollbar p-3.5 space-y-3 text-xs">
+          <div class="flex justify-between items-center">
+            <div><h3 class="font-bold text-white">Payment Ledger</h3><p class="text-[10px] text-slate-300 font-light">Cash, Card, & Wire transactions</p></div>
+            <span class="px-2.5 py-1 btn-electric-blue rounded-lg text-[10px] font-bold">+ Record</span>
+          </div>
+
+          <!-- 3 Glass Summary Cards -->
+          <div class="grid grid-cols-3 gap-1.5 text-center">
+            <div class="glass-panel p-2.5"><span class="text-[9px] font-light text-slate-300">Cash</span><div class="font-bold font-mono-numbers text-xs mt-0.5">$8,420</div></div>
+            <div class="glass-panel p-2.5"><span class="text-[9px] font-light text-slate-300">Card</span><div class="font-bold font-mono-numbers text-xs mt-0.5">$4,330</div></div>
+            <div class="glass-panel p-2.5"><span class="text-[9px] font-light text-slate-300">Wire</span><div class="font-bold font-mono-numbers text-xs mt-0.5">$1,500</div></div>
+          </div>
+
+          <div class="space-y-1.5">
+            <span class="text-[10px] text-slate-300 font-light uppercase">TRANSACTIONS — 5 records</span>
+            
+            <div class="glass-card-interactive p-2.5 flex justify-between items-center">
+              <div>
+                <div class="flex items-center gap-1.5"><strong class="text-white text-xs">Karim Benali</strong><span class="text-[8px] bg-white/10 px-1.5 py-0.2 rounded font-mono font-semibold">Cash</span></div>
+                <p class="text-[10px] text-slate-300 font-light">3 Months Pro</p>
+              </div>
+              <div class="text-right text-[#4ADE80] font-mono-numbers font-bold">+$90<p class="text-[9px] text-slate-400">Today 09:15 AM</p></div>
+            </div>
+
+            <div class="glass-card-interactive p-2.5 flex justify-between items-center">
+              <div>
+                <div class="flex items-center gap-1.5"><strong class="text-white text-xs">Mehdi Alami</strong><span class="text-[8px] bg-white/10 px-1.5 py-0.2 rounded font-mono font-semibold">Card</span></div>
+                <p class="text-[10px] text-slate-300 font-light">3 Months Pro</p>
+              </div>
+              <div class="text-right text-[#4ADE80] font-mono-numbers font-bold">+$90<p class="text-[9px] text-slate-400">Yesterday</p></div>
+            </div>
+
+            <div class="glass-card-interactive p-2.5 flex justify-between items-center">
+              <div>
+                <div class="flex items-center gap-1.5"><strong class="text-white text-xs">Omar Idrissi</strong><span class="text-[8px] bg-white/10 px-1.5 py-0.2 rounded font-mono font-semibold">Wire</span></div>
+                <p class="text-[10px] text-slate-300 font-light">1 Year Champion</p>
+              </div>
+              <div class="text-right text-[#4ADE80] font-mono-numbers font-bold">+$320<p class="text-[9px] text-slate-400">Oct 30 2026</p></div>
+            </div>
+
+            <div class="glass-card-interactive p-2.5 flex justify-between items-center">
+              <div>
+                <div class="flex items-center gap-1.5"><strong class="text-white text-xs">Hajar Chraibi</strong><span class="text-[8px] bg-white/10 px-1.5 py-0.2 rounded font-mono font-semibold">Cash</span></div>
+                <p class="text-[10px] text-slate-300 font-light">Monthly Fitness</p>
+              </div>
+              <div class="text-right text-[#4ADE80] font-mono-numbers font-bold">+$35<p class="text-[9px] text-slate-400">Oct 29 2026</p></div>
+            </div>
+
+            <div class="glass-card-interactive p-2.5 flex justify-between items-center">
+              <div>
+                <div class="flex items-center gap-1.5"><strong class="text-white text-xs">Sara Tazi</strong><span class="text-[8px] bg-white/10 px-1.5 py-0.2 rounded font-mono font-semibold">Cash</span></div>
+                <p class="text-[10px] text-slate-300 font-light">Monthly Fitness</p>
+              </div>
+              <div class="text-right text-[#4ADE80] font-mono-numbers font-bold">+$35<p class="text-[9px] text-slate-400">Oct 04 2026</p></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="p-2 border-t border-white/10 bg-[#0B1230]/80 flex justify-around text-[10px]">
+          <span class="text-slate-400">Dashboard</span>
+          <span class="text-slate-400">Members</span>
+          <span class="text-slate-400">Plans</span>
+          <span class="text-[#3B6BFF] font-bold">● Ledger</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Reusable Components Spec Guide Footer -->
+  <footer class="w-full max-w-5xl mt-6 p-5 glass-panel text-xs text-slate-300 space-y-3">
+    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 pb-3">
+      <h4 class="font-bold text-white text-sm">Design System & Reusable Components</h4>
+      <div class="flex items-center gap-3">
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-[#0B1230] border border-white/30"></span> #0B1230 Navy</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-[#3B6BFF]"></span> #3B6BFF Electric Blue</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-[#4ADE80]"></span> #4ADE80 Active</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-[#FBBF24]"></span> #FBBF24 Expiring</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-[#F87171]"></span> #F87171 Expired</span>
       </div>
     </div>
 
-  </main>
-
-  <!-- Pitch Value Highlights (Below Device) -->
-  <footer class="w-full max-w-4xl mt-6 p-4 rounded-2xl glass-card text-xs text-slate-600 flex flex-wrap items-center justify-between gap-4">
-    <div class="flex items-center gap-6">
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-        <span>Frosted Ice Glassmorphism</span>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 pt-1 text-[11px]">
+      <div>
+        <strong class="text-white block mb-0.5">1. GlassCard</strong>
+        <code class="text-slate-400 block font-mono text-[10px]">rgba(255,255,255,0.09) blur(18px) border 1px 22px</code>
       </div>
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
-        <span>High-Contrast Clarity</span>
+      <div>
+        <strong class="text-white block mb-0.5">2. PillButton</strong>
+        <code class="text-slate-400 block font-mono text-[10px]">bg #3B6BFF glow: 0 0 22px rgba(59,107,255,0.55)</code>
       </div>
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-        <span>Simpler Ocean Sapphire Accents</span>
+      <div>
+        <strong class="text-white block mb-0.5">3. StatusBadge</strong>
+        <code class="text-slate-400 block font-mono text-[10px]">#4ADE80 green / #FBBF24 amber / #F87171 red</code>
       </div>
-    </div>
-    <div class="text-slate-500 font-medium">
-      G.manager • Hackathon Prototype
+      <div>
+        <strong class="text-white block mb-0.5">4. StatCard</strong>
+        <code class="text-slate-400 block font-mono text-[10px]">2-col grid, light label, bold mono value</code>
+      </div>
+      <div>
+        <strong class="text-white block mb-0.5">5. BottomNav</strong>
+        <code class="text-slate-400 block font-mono text-[10px]">Floating glass bar, 28px radius, active blue</code>
+      </div>
     </div>
   </footer>
 
+  <!-- ============================================================ -->
+  <!-- JAVASCRIPT: State & Interaction Handlers -->
+  <!-- ============================================================ -->
   <script>
-    const INITIAL_MEMBERS = [
-      { id: 1, name: 'Karim Benali', phone: '+212 661 223344', plan: '3 Months Pro', status: 'active', endDate: 'Dec 15, 2026', totalPaid: 180 },
-      { id: 2, name: 'Sara Tazi', phone: '+212 662 334455', plan: 'Monthly Fitness', status: 'expiring', endDate: 'Nov 04, 2026', totalPaid: 70 },
-      { id: 3, name: 'Omar Idrissi', phone: '+212 663 445566', plan: '1 Year Champion', status: 'active', endDate: 'Jul 10, 2027', totalPaid: 320 },
-      { id: 4, name: 'Fatima Zahra', phone: '+212 664 556677', plan: 'Monthly Fitness', status: 'expired', endDate: 'Oct 28, 2026', totalPaid: 35 },
-      { id: 5, name: 'Mehdi Alami', phone: '+212 665 667788', plan: '3 Months Pro', status: 'active', endDate: 'Jan 20, 2027', totalPaid: 90 },
-      { id: 6, name: 'Hajar Chraibi', phone: '+212 666 778899', plan: 'Monthly Fitness', status: 'active', endDate: 'Nov 29, 2026', totalPaid: 35 }
+    // State matching user prompt
+    const MEMBERS_DATA = [
+      { id: 1, name: 'Karim Benali', plan: '3 Months Pro', phone: '+212 661 223344', status: 'ACTIVE', endDate: 'Dec 15 2026' },
+      { id: 2, name: 'Sara Tazi', plan: 'Monthly Fitness', phone: '+212 662 334455', status: 'EXPIRING', endDate: 'Nov 04 2026' },
+      { id: 3, name: 'Omar Idrissi', plan: '1 Year Champion', phone: '+212 663 445566', status: 'ACTIVE', endDate: 'Jul 10 2027' },
+      { id: 4, name: 'Fatima Zahra', plan: 'Monthly Fitness', phone: '+212 664 556677', status: 'EXPIRED', endDate: 'Oct 28 2026' },
+      { id: 5, name: 'Mehdi Alami', plan: '3 Months Pro', phone: '+212 665 667788', status: 'ACTIVE', endDate: 'Jan 20 2027' },
+      { id: 6, name: 'Hajar Chraibi', plan: 'Monthly Fitness', phone: '+212 666 778899', status: 'ACTIVE', endDate: 'Nov 29 2026' }
     ];
 
-    const INITIAL_PAYMENTS = [
-      { id: 101, memberName: 'Karim Benali', amount: 90, plan: '3 Months Pro', method: 'Cash', date: 'Today, 09:15 AM' },
-      { id: 102, memberName: 'Mehdi Alami', amount: 90, plan: '3 Months Pro', method: 'Card', date: 'Yesterday' },
-      { id: 103, memberName: 'Omar Idrissi', amount: 320, plan: '1 Year Champion', method: 'Wire', date: 'Oct 30, 2026' },
-      { id: 104, memberName: 'Hajar Chraibi', amount: 35, plan: 'Monthly Fitness', method: 'Cash', date: 'Oct 29, 2026' },
-      { id: 105, memberName: 'Sara Tazi', amount: 35, plan: 'Monthly Fitness', method: 'Cash', date: 'Oct 04, 2026' }
+    const TRANSACTIONS_DATA = [
+      { id: 1, name: 'Karim Benali', method: 'Cash', plan: '3 Months Pro', amount: 90, date: 'Today 09:15 AM' },
+      { id: 2, name: 'Mehdi Alami', method: 'Card', plan: '3 Months Pro', amount: 90, date: 'Yesterday' },
+      { id: 3, name: 'Omar Idrissi', method: 'Wire', plan: '1 Year Champion', amount: 320, date: 'Oct 30 2026' },
+      { id: 4, name: 'Hajar Chraibi', method: 'Cash', plan: 'Monthly Fitness', amount: 35, date: 'Oct 29 2026' },
+      { id: 5, name: 'Sara Tazi', method: 'Cash', plan: 'Monthly Fitness', amount: 35, date: 'Oct 04 2026' }
     ];
 
-    let members = JSON.parse(JSON.stringify(INITIAL_MEMBERS));
-    let payments = JSON.parse(JSON.stringify(INITIAL_PAYMENTS));
-    let currentFilter = 'all';
+    let members = JSON.parse(JSON.stringify(MEMBERS_DATA));
+    let transactions = JSON.parse(JSON.stringify(TRANSACTIONS_DATA));
+    let activeFilter = 'all';
     let searchQuery = '';
-    let selectedMember = null;
-    let isFullView = false;
 
+    // Clock
     function updateClock() {
       const now = new Date();
       const hrs = String(now.getHours()).padStart(2, '0');
       const mins = String(now.getMinutes()).padStart(2, '0');
-      const el = document.getElementById('current-clock');
+      const el = document.getElementById('sim-clock');
       if (el) el.textContent = `${hrs}:${mins}`;
     }
     setInterval(updateClock, 1000);
     updateClock();
 
-    function toggleDeviceFrame() {
-      const container = document.getElementById('device-container');
-      const btn = document.getElementById('toggle-device-btn');
-      isFullView = !isFullView;
+    // View Switcher (Interactive vs Grid)
+    function setViewMode(mode) {
+      const interactiveSec = document.getElementById('interactive-view');
+      const gridSec = document.getElementById('grid-view');
+      const btnInt = document.getElementById('view-interactive-btn');
+      const btnGrid = document.getElementById('view-grid-btn');
 
-      if (isFullView) {
-        container.classList.remove('max-w-[400px]', 'h-[820px]', 'rounded-[48px]', 'border-[8px]');
-        container.classList.add('max-w-4xl', 'h-[860px]', 'rounded-3xl', 'border-2');
-        btn.querySelector('span').textContent = 'Phone Size View';
+      if (mode === 'grid') {
+        interactiveSec.classList.add('hidden');
+        gridSec.classList.remove('hidden');
+        btnGrid.className = 'px-3.5 py-1.5 text-xs font-semibold bg-[#3B6BFF] text-white rounded-xl shadow-[0_0_16px_rgba(59,107,255,0.4)] transition';
+        btnInt.className = 'px-3.5 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/15 text-slate-200 border border-white/20 rounded-xl backdrop-blur-md transition';
       } else {
-        container.classList.add('max-w-[400px]', 'h-[820px]', 'rounded-[48px]', 'border-[8px]');
-        container.classList.remove('max-w-4xl', 'h-[860px]', 'rounded-3xl', 'border-2');
-        btn.querySelector('span').textContent = 'Toggle Frame / Full View';
+        interactiveSec.classList.remove('hidden');
+        gridSec.classList.add('hidden');
+        btnInt.className = 'px-3.5 py-1.5 text-xs font-semibold bg-[#3B6BFF] text-white rounded-xl shadow-[0_0_16px_rgba(59,107,255,0.4)] transition';
+        btnGrid.className = 'px-3.5 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/15 text-slate-200 border border-white/20 rounded-xl backdrop-blur-md transition';
       }
     }
 
-    function switchTab(tabName) {
-      const tabs = ['dashboard', 'members', 'plans', 'payments'];
-      tabs.forEach(tab => {
-        const section = document.getElementById(`tab-${tab}`);
-        const navBtn = document.getElementById(`nav-${tab}`);
-        if (tab === tabName) {
-          section.classList.remove('hidden');
-          navBtn.classList.add('text-blue-600');
+    // Switch Tabs in Interactive view
+    function switchTab(tabId) {
+      const screens = ['dashboard', 'members', 'plans', 'ledger'];
+      screens.forEach(s => {
+        const screenEl = document.getElementById(`screen-${s}`);
+        const navBtn = document.getElementById(`nav-btn-${s}`);
+        if (s === tabId) {
+          screenEl.classList.remove('hidden');
           navBtn.classList.remove('text-slate-400');
+          navBtn.classList.add('text-[#3B6BFF]', 'font-bold');
         } else {
-          section.classList.add('hidden');
-          navBtn.classList.remove('text-blue-600');
+          screenEl.classList.add('hidden');
           navBtn.classList.add('text-slate-400');
+          navBtn.classList.remove('text-[#3B6BFF]', 'font-bold');
         }
       });
-      document.getElementById('screen-container').scrollTop = 0;
+      document.getElementById('sim-screen-container').scrollTop = 0;
     }
 
+    // Filter members
     function filterMembers(status) {
-      currentFilter = status;
-      document.querySelectorAll('.filter-pill').forEach(btn => {
-        btn.classList.remove('bg-blue-600', 'text-white', 'font-bold', 'shadow-sm');
-        btn.classList.add('bg-white/70', 'text-slate-600', 'font-medium', 'border', 'border-slate-200/70');
+      activeFilter = status;
+      document.querySelectorAll('.filter-chip').forEach(c => {
+        c.className = 'filter-chip px-3 py-1.5 rounded-xl text-xs font-medium bg-white/10 text-slate-300 border border-white/20 hover:text-white';
       });
       const activeBtn = document.getElementById(`filter-${status}`);
       if (activeBtn) {
-        activeBtn.classList.remove('bg-white/70', 'text-slate-600', 'font-medium', 'border', 'border-slate-200/70');
-        activeBtn.classList.add('bg-blue-600', 'text-white', 'font-bold', 'shadow-sm');
+        activeBtn.className = 'filter-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#3B6BFF] text-white shadow-[0_0_12px_rgba(59,107,255,0.4)]';
       }
-      renderMembersList();
+      renderMembers();
     }
 
     function handleMemberSearch(val) {
       searchQuery = val.toLowerCase().trim();
-      renderMembersList();
+      renderMembers();
     }
 
-    function renderMembersList() {
-      const container = document.getElementById('members-cards-container');
+    // Render Members
+    function renderMembers() {
+      const container = document.getElementById('members-list-container');
       const filtered = members.filter(m => {
-        const matchesStatus = currentFilter === 'all' || m.status === currentFilter;
-        const matchesSearch = !searchQuery || m.name.toLowerCase().includes(searchQuery) || m.phone.includes(searchQuery);
-        return matchesStatus && matchesSearch;
+        const matchesStatus = activeFilter === 'all' || m.status.toLowerCase() === activeFilter.toLowerCase();
+        const matchesQuery = !searchQuery || m.name.toLowerCase().includes(searchQuery) || m.phone.includes(searchQuery);
+        return matchesStatus && matchesQuery;
       });
 
-      document.getElementById('count-all').textContent = members.length;
-      document.getElementById('count-active').textContent = members.filter(m => m.status === 'active').length;
-      document.getElementById('count-expiring').textContent = members.filter(m => m.status === 'expiring').length;
-      document.getElementById('count-expired').textContent = members.filter(m => m.status === 'expired').length;
-      document.getElementById('members-list-subtitle').textContent = `Showing ${filtered.length} of ${members.length} gym members`;
-
       if (filtered.length === 0) {
-        container.innerHTML = `
-          <div class="p-8 text-center glass-card rounded-2xl">
-            <p class="text-sm text-slate-500">No members match your criteria</p>
-            <button onclick="searchQuery=''; document.getElementById('member-search-input').value=''; filterMembers('all');" class="mt-2 text-xs text-blue-600 font-bold underline">
-              Clear search & filters
-            </button>
-          </div>
-        `;
+        container.innerHTML = `<div class="p-6 text-center glass-panel text-slate-400 text-xs">No matching members found</div>`;
         return;
       }
 
       container.innerHTML = filtered.map(m => {
-        let badgeStyle = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-        let badgeText = 'ACTIVE';
-        if (m.status === 'expiring') {
-          badgeStyle = 'bg-amber-50 text-amber-700 border-amber-200';
-          badgeText = 'EXPIRING';
-        } else if (m.status === 'expired') {
-          badgeStyle = 'bg-rose-50 text-rose-700 border-rose-200';
-          badgeText = 'EXPIRED';
-        }
-
-        const initial = m.name.charAt(0);
+        let badgeStyle = 'bg-[#4ADE80]/15 text-[#4ADE80] border-[#4ADE80]/30 shadow-[0_0_10px_rgba(74,222,128,0.2)]';
+        if (m.status === 'EXPIRING') badgeStyle = 'bg-[#FBBF24]/15 text-[#FBBF24] border-[#FBBF24]/30 shadow-[0_0_10px_rgba(251,191,36,0.2)]';
+        if (m.status === 'EXPIRED') badgeStyle = 'bg-[#F87171]/15 text-[#F87171] border-[#F87171]/30 shadow-[0_0_10px_rgba(248,113,113,0.2)]';
 
         return `
-          <div onclick="openMemberDetail(${m.id})" class="p-3.5 glass-card-interactive rounded-2xl flex items-center justify-between cursor-pointer">
+          <div class="glass-card-interactive p-3 flex items-center justify-between cursor-pointer">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm shadow-sm">
-                ${initial}
+              <div class="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-xs">
+                ${m.name.charAt(0)}
               </div>
               <div>
-                <h4 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  ${m.name}
-                </h4>
-                <p class="text-[11px] text-slate-500 font-medium">${m.plan} • <span class="font-mono text-slate-400">${m.phone}</span></p>
+                <h4 class="text-xs font-bold text-white">${m.name}</h4>
+                <p class="text-[11px] text-slate-300 font-light">${m.plan} • <span class="font-mono text-slate-400">${m.phone}</span></p>
               </div>
             </div>
 
             <div class="text-right">
-              <span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold border ${badgeStyle}">
-                ${badgeText}
+              <span class="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border ${badgeStyle}">
+                ${m.status}
               </span>
-              <p class="text-[10px] text-slate-400 mt-1 font-mono">${m.endDate}</p>
+              <p class="text-[10px] text-slate-400 font-mono-numbers mt-1">${m.endDate}</p>
             </div>
           </div>
         `;
       }).join('');
 
-      const selectEl = document.getElementById('payment-member-select');
+      // Update Member select in modal
+      const selectEl = document.getElementById('select-payment-member');
       if (selectEl) {
         selectEl.innerHTML = members.map(m => `<option value="${m.id}">${m.name} (${m.plan})</option>`).join('');
       }
     }
 
-    function renderRecentActivity() {
-      const container = document.getElementById('recent-activity-list');
-      const recent = payments.slice(0, 4);
-
-      container.innerHTML = recent.map(p => `
-        <div class="p-3 rounded-2xl glass-card flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-xl bg-blue-50 border border-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold shadow-sm">
-              +$
-            </div>
-            <div>
-              <p class="text-xs font-bold text-slate-800">${p.memberName}</p>
-              <p class="text-[10px] text-slate-500">${p.plan} • <span class="text-slate-700 font-medium">${p.method}</span></p>
-            </div>
-          </div>
-          <div class="text-right">
-            <span class="text-xs font-bold text-emerald-600 font-mono">+$${p.amount}</span>
-            <p class="text-[9px] text-slate-400 font-mono">${p.date}</p>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderPaymentsHistory() {
-      const container = document.getElementById('payments-history-list');
-      document.getElementById('payment-tx-count').textContent = `${payments.length} records`;
-
-      container.innerHTML = payments.map(p => `
-        <div class="p-3.5 rounded-2xl glass-card flex items-center justify-between">
+    // Render Ledger
+    function renderLedger() {
+      const container = document.getElementById('ledger-transactions-list');
+      container.innerHTML = transactions.map(t => `
+        <div class="glass-card-interactive p-3 flex items-center justify-between">
           <div>
             <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-slate-900">${p.memberName}</span>
-              <span class="px-2 py-0.5 text-[9px] font-bold bg-slate-100 text-slate-700 rounded-md border border-slate-200">${p.method}</span>
+              <span class="text-xs font-bold text-white">${t.name}</span>
+              <span class="px-2 py-0.5 text-[9px] font-mono font-bold bg-white/15 text-slate-200 rounded-md border border-white/10">${t.method}</span>
             </div>
-            <p class="text-[11px] text-slate-500 mt-0.5 font-medium">${p.plan}</p>
+            <p class="text-[11px] text-slate-300 font-light mt-0.5">${t.plan}</p>
           </div>
           <div class="text-right">
-            <span class="text-sm font-bold text-blue-600 font-mono">+$${p.amount}</span>
-            <p class="text-[10px] text-slate-400 font-mono">${p.date}</p>
+            <span class="text-xs font-bold text-[#4ADE80] font-mono-numbers">+$${t.amount}</span>
+            <p class="text-[9px] text-slate-400 font-mono-numbers">${t.date}</p>
           </div>
         </div>
       `).join('');
     }
 
-    function openMemberDetail(memberId) {
-      const member = members.find(m => m.id === memberId);
-      if (!member) return;
-      selectedMember = member;
-
-      document.getElementById('modal-member-name').textContent = member.name;
-      document.getElementById('modal-member-phone').textContent = member.phone;
-      document.getElementById('modal-member-plan').textContent = member.plan;
-      document.getElementById('modal-member-date').textContent = member.endDate;
-      document.getElementById('modal-member-avatar').textContent = member.name.charAt(0);
-
-      const badge = document.getElementById('modal-member-badge');
-      if (member.status === 'active') {
-        badge.className = 'px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200';
-        badge.textContent = 'ACTIVE';
-      } else if (member.status === 'expiring') {
-        badge.className = 'px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-amber-50 text-amber-700 border border-amber-200';
-        badge.textContent = 'EXPIRING';
-      } else {
-        badge.className = 'px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-rose-50 text-rose-700 border border-rose-200';
-        badge.textContent = 'EXPIRED';
-      }
-
-      openModal('member-detail-modal');
-    }
-
-    function openRenewalForCurrentMember() {
-      closeModal('member-detail-modal');
-      if (selectedMember) {
-        document.getElementById('payment-member-select').value = selectedMember.id;
-      }
+    // Quick Assign
+    function quickAssign(plan, price) {
+      document.getElementById('input-payment-amount').value = price;
       openModal('record-payment-modal');
+      showToast(`Selected ${plan} ($${price})`);
     }
 
-    function quickAssignPlan(planName, price) {
-      document.getElementById('payment-amount').value = price;
-      openModal('record-payment-modal');
-      showToast(`Selected ${planName} ($${price})`);
-    }
-
+    // Submit New Member
     function submitNewMember(e) {
       e.preventDefault();
-      const name = document.getElementById('new-member-name').value.trim();
-      const phone = document.getElementById('new-member-phone').value.trim();
-      const planStr = document.getElementById('new-member-plan').value;
-      const method = document.querySelector('input[name="pay-method"]:checked').value;
+      const name = document.getElementById('input-member-name').value.trim();
+      const phone = document.getElementById('input-member-phone').value.trim();
+      const plan = document.getElementById('input-member-plan').value;
 
       if (!name || !phone) return;
 
-      const newId = members.length + 1;
-      const newMember = {
-        id: newId,
-        name: name,
-        phone: phone,
-        plan: planStr.split(' (')[0],
-        status: 'active',
-        endDate: 'Jan 28, 2027',
-        totalPaid: 90
-      };
-
-      members.unshift(newMember);
-
-      payments.unshift({
+      members.unshift({
         id: Date.now(),
-        memberName: name,
+        name,
+        phone,
+        plan,
+        status: 'ACTIVE',
+        endDate: 'Jan 28 2027'
+      });
+
+      transactions.unshift({
+        id: Date.now(),
+        name,
+        method: 'Cash',
+        plan,
         amount: 90,
-        plan: newMember.plan,
-        method: method,
         date: 'Just now'
       });
 
-      const currentRev = parseInt(document.getElementById('dash-revenue').textContent.replace('$', '').replace(',', '').trim());
-      document.getElementById('dash-revenue').textContent = `$${(currentRev + 90).toLocaleString()}`;
-      document.getElementById('dash-active-count').textContent = members.filter(m => m.status === 'active').length;
-
       closeModal('add-member-modal');
-      document.getElementById('add-member-form').reset();
+      document.getElementById('input-member-name').value = '';
+      document.getElementById('input-member-phone').value = '';
 
-      renderMembersList();
-      renderRecentActivity();
-      renderPaymentsHistory();
+      renderMembers();
+      renderLedger();
 
-      showToast(`Member "${name}" registered with active plan!`);
+      const revEl = document.getElementById('dash-rev-val');
+      const cur = parseInt(revEl.textContent.replace('$', '').replace(',', '').trim());
+      revEl.textContent = `$${(cur + 90).toLocaleString()}`;
+      document.getElementById('dash-active-count').textContent = members.filter(m => m.status === 'ACTIVE').length;
+
+      showToast(`Member "${name}" registered successfully!`);
       switchTab('members');
     }
 
+    // Submit Payment
     function submitPayment(e) {
       e.preventDefault();
-      const memberId = parseInt(document.getElementById('payment-member-select').value);
-      const amount = parseFloat(document.getElementById('payment-amount').value);
-      const method = document.getElementById('payment-method-select').value;
+      const memberId = parseInt(document.getElementById('select-payment-member').value);
+      const amount = parseInt(document.getElementById('input-payment-amount').value);
+      const method = document.getElementById('select-payment-method').value;
 
       const member = members.find(m => m.id === memberId);
       if (!member) return;
 
-      member.status = 'active';
-      member.endDate = 'Dec 31, 2026';
-      member.totalPaid += amount;
+      member.status = 'ACTIVE';
+      member.endDate = 'Dec 31 2026';
 
-      payments.unshift({
+      transactions.unshift({
         id: Date.now(),
-        memberName: member.name,
-        amount: amount,
+        name: member.name,
+        method,
         plan: member.plan,
-        method: method,
+        amount,
         date: 'Just now'
       });
 
-      const currentRev = parseInt(document.getElementById('dash-revenue').textContent.replace('$', '').replace(',', '').trim());
-      document.getElementById('dash-revenue').textContent = `$${(currentRev + amount).toLocaleString()}`;
-
       closeModal('record-payment-modal');
-      renderMembersList();
-      renderRecentActivity();
-      renderPaymentsHistory();
+      renderMembers();
+      renderLedger();
+
+      const revEl = document.getElementById('dash-rev-val');
+      const cur = parseInt(revEl.textContent.replace('$', '').replace(',', '').trim());
+      revEl.textContent = `$${(cur + amount).toLocaleString()}`;
 
       showToast(`Payment of $${amount} recorded for ${member.name}!`);
     }
 
+    // Modal helpers
     function openModal(id) {
       const modal = document.getElementById(id);
       if (modal) modal.classList.remove('hidden');
     }
-
     function closeModal(id) {
       const modal = document.getElementById(id);
       if (modal) modal.classList.add('hidden');
     }
 
+    // Toast
     let toastTimeout;
     function showToast(msg) {
       const toast = document.getElementById('toast-notification');
@@ -1015,32 +1255,25 @@
       clearTimeout(toastTimeout);
       toastTimeout = setTimeout(hideToast, 3500);
     }
-
     function hideToast() {
       const toast = document.getElementById('toast-notification');
       toast.classList.add('opacity-0', 'pointer-events-none');
       toast.classList.remove('opacity-100');
     }
 
-    function triggerNotificationToast() {
-      showToast('3 Members have subscriptions expiring today');
-    }
-
     function resetDemoData() {
-      members = JSON.parse(JSON.stringify(INITIAL_MEMBERS));
-      payments = JSON.parse(JSON.stringify(INITIAL_PAYMENTS));
-      document.getElementById('dash-revenue').textContent = '$14,250';
+      members = JSON.parse(JSON.stringify(MEMBERS_DATA));
+      transactions = JSON.parse(JSON.stringify(TRANSACTIONS_DATA));
+      document.getElementById('dash-rev-val').textContent = '$14,250';
       document.getElementById('dash-active-count').textContent = '248';
-      document.getElementById('dash-expiring-count').textContent = '14';
       filterMembers('all');
-      renderRecentActivity();
-      renderPaymentsHistory();
-      showToast('Prototype data reset to initial demo state');
+      renderLedger();
+      showToast('Prototype reset to initial demo state');
     }
 
-    renderMembersList();
-    renderRecentActivity();
-    renderPaymentsHistory();
+    // Init
+    renderMembers();
+    renderLedger();
   </script>
 </body>
 </html>
