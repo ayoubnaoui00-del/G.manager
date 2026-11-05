@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G.manager — Cyber Neon & Glassmorphism Prototype</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom scrollbar for mobile container */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Cyber neon glow effects */
+    .neon-cyan-glow {
+      box-shadow: 0 0 25px -4px rgba(6, 182, 212, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    .neon-emerald-glow {
+      box-shadow: 0 0 25px -4px rgba(16, 185, 129, 0.45), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    .neon-purple-glow {
+      box-shadow: 0 0 30px -4px rgba(168, 85, 247, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    .neon-border-cyan {
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      box-shadow: 0 0 15px -3px rgba(6, 182, 212, 0.25);
+    }
+    .neon-border-purple {
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      box-shadow: 0 0 15px -3px rgba(168, 85, 247, 0.25);
+    }
+    .neon-text-glow {
+      text-shadow: 0 0 12px rgba(6, 182, 212, 0.6);
+    }
+    .neon-text-purple {
+      text-shadow: 0 0 12px rgba(192, 132, 252, 0.6);
+    }
+
+    /* Ultra Glassmorphism */
+    .glass-card {
+      background: rgba(13, 17, 35, 0.55);
+      backdrop-filter: blur(20px) saturate(190%);
+      -webkit-backdrop-filter: blur(20px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .glass-card-interactive {
+      background: rgba(13, 17, 35, 0.5);
+      backdrop-filter: blur(20px) saturate(190%);
+      -webkit-backdrop-filter: blur(20px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card-interactive:hover {
+      background: rgba(19, 26, 52, 0.65);
+      border-color: rgba(6, 182, 212, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px 0 rgba(6, 182, 212, 0.2), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    .glass-input {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    }
+    .glass-input:focus {
+      border-color: rgba(6, 182, 212, 0.6);
+      box-shadow: 0 0 16px rgba(6, 182, 212, 0.35), inset 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* Ambient animated neon gradient background */
+    .cyber-grid {
+      background-image: 
+        radial-gradient(rgba(147, 51, 234, 0.12) 1px, transparent 1px),
+        radial-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+      background-size: 32px 32px, 16px 16px;
+      background-position: 0 0, 16px 16px;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-12px) scale(1.04); }
+    }
+    .animate-float {
+      animation: float-slow 7s ease-in-out infinite;
+    }
+
+    @keyframes pulse-neon {
+      0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.7)); }
+      50% { opacity: 1; filter: drop-shadow(0 0 16px rgba(6, 182, 212, 0.95)); }
+    }
+    .animate-neon-pulse {
+      animation: pulse-neon 2.5s infinite;
+    }
+  </style>
+</head>
+<body class="bg-[#030614] text-slate-100 min-h-screen flex flex-col items-center justify-center p-2 sm:p-6 antialiased selection:bg-cyan-500 selection:text-black relative overflow-x-hidden cyber-grid">
+
+  <!-- Ambient Blurred Neon Orbs in Background -->
+  <div class="fixed top-[-10%] left-[-5%] w-[480px] h-[480px] rounded-full bg-gradient-to-tr from-purple-700/35 via-fuchsia-600/25 to-pink-500/20 blur-[130px] pointer-events-none -z-10 animate-float"></div>
+  <div class="fixed bottom-[-10%] right-[-5%] w-[520px] h-[520px] rounded-full bg-gradient-to-bl from-cyan-500/30 via-teal-500/20 to-emerald-600/25 blur-[140px] pointer-events-none -z-10 animate-float" style="animation-delay: -3.5s;"></div>
+  <div class="fixed top-[40%] right-[20%] w-[320px] h-[320px] rounded-full bg-blue-600/20 blur-[110px] pointer-events-none -z-10"></div>
+
+  <!-- Pitch Header & Controls -->
+  <header class="w-full max-w-5xl mb-4 flex flex-wrap items-center justify-between gap-3 px-3">
+    <div class="flex items-center gap-3">
+      <!-- Cyber Neon Logo -->
+      <div class="relative group">
+        <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-fuchsia-500 to-purple-600 rounded-2xl blur-md opacity-75 group-hover:opacity-100 transition duration-500"></div>
+        <div class="relative w-11 h-11 rounded-xl bg-slate-950/80 border border-white/20 backdrop-blur-xl flex items-center justify-center font-black text-xl bg-clip-text text-transparent bg-gradient-to-br from-cyan-300 via-teal-200 to-fuchsia-400 shadow-inner">
+          G
+        </div>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-xl font-extrabold tracking-tight text-white flex items-center gap-1.5">
+            G.manager
+            <span class="text-xs font-mono font-semibold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 shadow-[0_0_12px_rgba(6,182,212,0.3)]">
+              NEON GLASS v2
+            </span>
+          </h1>
+        </div>
+        <p class="text-xs text-slate-400 font-medium tracking-wide">
+          Gym Subscription Management • <span class="text-cyan-400">Glassmorphism Interactive Prototype</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Presentation Controls -->
+    <div class="flex items-center gap-2.5">
+      <button id="toggle-device-btn" onclick="toggleDeviceFrame()" class="px-3.5 py-1.5 text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 hover:border-cyan-500/40 rounded-xl backdrop-blur-md transition-all flex items-center gap-1.5 shadow-lg">
+        <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        <span>Toggle Frame / Full View</span>
+      </button>
+
+      <button onclick="resetDemoData()" class="px-3.5 py-1.5 text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 hover:border-purple-500/40 rounded-xl backdrop-blur-md transition-all flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        Reset Data
+      </button>
+
+      <div class="px-3 py-1.5 bg-cyan-950/40 text-cyan-300 rounded-xl font-mono text-xs flex items-center gap-2 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.25)]">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+        Pitch Mode
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Mobile Device Simulator (Glass Chassis) -->
+  <main id="device-container" class="relative w-full max-w-[400px] h-[820px] bg-slate-950/70 border-[8px] border-slate-800/80 rounded-[50px] shadow-[0_20px_70px_rgba(0,0,0,0.8),0_0_50px_rgba(6,182,212,0.18)] backdrop-blur-2xl flex flex-col overflow-hidden transition-all duration-300">
+    
+    <!-- Phone Top Dynamic Island & Status Bar -->
+    <div class="w-full bg-transparent text-slate-300 pt-3.5 pb-2 px-6 flex justify-between items-center z-30 select-none text-xs border-b border-white/5">
+      <span class="font-bold text-slate-200 tracking-tight" id="current-clock">09:41</span>
+      
+      <!-- Dynamic Island Pill with Cyber Glow -->
+      <div class="h-4.5 w-26 bg-black/90 border border-white/10 rounded-full flex items-center justify-center gap-1.5 px-2.5 shadow-inner">
+        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+        <span class="text-[9px] font-mono font-medium text-cyan-300 tracking-wider">G.MANAGER</span>
+      </div>
+
+      <div class="flex items-center gap-1.5 text-slate-300">
+        <svg class="w-3.5 h-3.5 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zm6-4a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zm6-3a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
+        <svg class="w-3.5 h-3.5 text-fuchsia-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.077 13.308-5.077 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zm-2.829 2.828a3 3 0 00-4.242 0 1 1 0 01-1.415-1.414 5 5 0 017.072 0 1 1 0 01-1.415 1.414zM9 16a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/></svg>
+        <div class="w-5 h-2.5 border border-slate-400/80 rounded-sm p-0.5 flex items-center">
+          <div class="h-full w-full bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-2xs shadow-[0_0_6px_rgba(16,185,129,0.8)]"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- App Top Bar (Glass Header) -->
+    <div class="px-5 py-3.5 bg-slate-950/60 backdrop-blur-xl border-b border-white/10 flex items-center justify-between z-20">
+      <div class="flex items-center gap-3">
+        <!-- Glowing Avatar -->
+        <div class="relative">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-cyan-500 via-indigo-500 to-fuchsia-500 p-[1.5px] shadow-[0_0_12px_rgba(6,182,212,0.4)]">
+            <div class="w-full h-full rounded-full bg-slate-950/90 flex items-center justify-center font-black text-cyan-300 text-xs">
+              EA
+            </div>
+          </div>
+          <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-slate-950 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+        </div>
+
+        <div>
+          <div class="text-[10px] font-mono uppercase tracking-wider text-cyan-400/90 font-bold flex items-center gap-1">
+            GYM OWNER • PRO
+          </div>
+          <h2 class="text-sm font-bold text-white tracking-tight flex items-center gap-1.5">
+            Iron Forge Gym
+            <svg class="w-3.5 h-3.5 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          </h2>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="triggerNotificationToast()" class="relative p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-colors shadow">
+          <svg class="w-4 h-4 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span class="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-fuchsia-500 shadow-[0_0_8px_rgba(217,70,239,0.9)] animate-pulse"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Scrollable Screen Content Body -->
+    <div id="screen-container" class="flex-1 overflow-y-auto no-scrollbar pb-24 relative">
+      
+      <!-- ============================================================ -->
+      <!-- TAB 1: DASHBOARD -->
+      <!-- ============================================================ -->
+      <section id="tab-dashboard" class="p-4 space-y-4">
+        
+        <!-- Hero Neon Glass Revenue Card -->
+        <div class="relative group p-5 rounded-3xl glass-card overflow-hidden">
+          <!-- Ambient card background gradients -->
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br from-cyan-500/25 to-blue-600/10 rounded-full blur-2xl"></div>
+          <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-gradient-to-tr from-fuchsia-600/20 to-purple-600/10 rounded-full blur-2xl"></div>
+          
+          <div class="relative z-10">
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="text-[11px] font-mono uppercase tracking-wider text-cyan-300/80 font-bold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                  Monthly Revenue
+                </span>
+                <h3 class="text-3xl font-black text-white mt-1 tracking-tight flex items-baseline gap-1" id="dash-revenue">
+                  $14,250
+                  <span class="text-xs font-mono font-normal text-slate-400">USD</span>
+                </h3>
+                <div class="flex items-center gap-2 mt-1.5">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 flex items-center gap-1 shadow-[0_0_8px_rgba(16,185,129,0.3)]">
+                    ↑ +18.4%
+                  </span>
+                  <span class="text-[11px] text-slate-400">vs. last month</span>
+                </div>
+              </div>
+
+              <!-- Live pulse badge -->
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-white/5 border border-white/10 text-cyan-300 flex items-center gap-1.5 backdrop-blur-md shadow-sm">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+                LIVE
+              </span>
+            </div>
+
+            <!-- Quick Action Glass Buttons -->
+            <div class="grid grid-cols-3 gap-2 mt-5 pt-3.5 border-t border-white/10">
+              <button onclick="openModal('add-member-modal')" class="group/btn py-2.5 px-2 rounded-2xl bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 text-slate-950 font-bold text-xs flex flex-col items-center justify-center gap-1 transition-all duration-200 shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.7)] hover:scale-[1.02]">
+                <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                <span>+ Member</span>
+              </button>
+
+              <button onclick="openModal('record-payment-modal')" class="py-2.5 px-2 rounded-2xl glass-card-interactive text-slate-200 font-semibold text-xs flex flex-col items-center justify-center gap-1">
+                <svg class="w-4 h-4 text-fuchsia-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>+ Payment</span>
+              </button>
+
+              <button onclick="switchTab('plans')" class="py-2.5 px-2 rounded-2xl glass-card-interactive text-slate-200 font-semibold text-xs flex flex-col items-center justify-center gap-1">
+                <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                <span>Plans</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric KPI Cards (Neon Glass Dual Grid) -->
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Active Members -->
+          <div class="p-4 rounded-3xl glass-card relative overflow-hidden group">
+            <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-cyan-500/15 rounded-full blur-xl group-hover:bg-cyan-500/25 transition"></div>
+            <div class="relative z-10">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-semibold">Active Members</span>
+                <div class="w-7 h-7 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-300">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </div>
+              </div>
+              <h4 class="text-2xl font-black text-white tracking-tight" id="dash-active-count">248</h4>
+              <p class="text-[10px] text-emerald-400 font-semibold mt-0.5 flex items-center gap-1">
+                <span>●</span> +12 joined this week
+              </p>
+            </div>
+          </div>
+
+          <!-- Expiring Soon Warning (Neon Amber/Fuchsia) -->
+          <div onclick="filterMembers('expiring'); switchTab('members');" class="p-4 rounded-3xl glass-card relative overflow-hidden cursor-pointer group hover:border-amber-500/40 transition">
+            <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-amber-500/15 rounded-full blur-xl group-hover:bg-amber-500/30 transition"></div>
+            <div class="relative z-10">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-mono uppercase tracking-wider text-amber-300 font-semibold">Expiring &lt; 7d</span>
+                <div class="w-7 h-7 rounded-lg bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.3)]">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                </div>
+              </div>
+              <h4 class="text-2xl font-black text-amber-200 tracking-tight" id="dash-expiring-count">14</h4>
+              <p class="text-[10px] text-amber-300/90 font-medium mt-0.5 underline">
+                Tap to renew now →
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Glowing Expiration Alert Banner -->
+        <div class="p-3.5 rounded-2xl bg-gradient-to-r from-rose-950/40 via-purple-950/30 to-slate-900/60 border border-rose-500/40 backdrop-blur-xl flex items-center justify-between shadow-[0_0_20px_rgba(244,63,94,0.18)]">
+          <div class="flex items-center gap-3">
+            <div class="w-2.5 h-2.5 rounded-full bg-rose-400 shadow-[0_0_10px_rgba(244,63,94,0.9)] animate-ping"></div>
+            <div>
+              <p class="text-xs font-bold text-rose-200">3 Subscriptions Expire Today</p>
+              <p class="text-[10px] text-slate-400">Trigger instant 1-click WhatsApp renewal</p>
+            </div>
+          </div>
+          <button onclick="showToast('WhatsApp renewal link sent to expiring members!')" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-400 hover:to-pink-400 text-white font-bold text-xs transition shadow-[0_0_15px_rgba(244,63,94,0.4)]">
+            Notify
+          </button>
+        </div>
+
+        <!-- Recent Activity Feed (Glass List) -->
+        <div class="space-y-2.5">
+          <div class="flex justify-between items-center px-1">
+            <h4 class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+              Recent Activity
+            </h4>
+            <span class="text-xs text-cyan-400 hover:text-cyan-300 font-semibold cursor-pointer" onclick="switchTab('payments')">View Ledger →</span>
+          </div>
+
+          <div id="recent-activity-list" class="space-y-2">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 2: MEMBERS -->
+      <!-- ============================================================ -->
+      <section id="tab-members" class="p-4 space-y-3.5 hidden">
+        
+        <!-- Search and Filter Bar -->
+        <div class="space-y-2.5">
+          <div class="relative">
+            <svg class="w-4 h-4 absolute left-3.5 top-3 text-cyan-400/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input 
+              id="member-search-input" 
+              type="text" 
+              placeholder="Search member name or phone..." 
+              oninput="handleMemberSearch(this.value)"
+              class="w-full glass-input text-slate-100 rounded-2xl pl-10 pr-4 py-2.5 text-xs focus:outline-none transition placeholder-slate-500"
+            >
+          </div>
+
+          <!-- Status Filter Pills -->
+          <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+            <button onclick="filterMembers('all')" id="filter-all" class="filter-pill active px-3.5 py-1.5 rounded-xl text-xs font-bold bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(6,182,212,0.4)] transition">
+              All (<span id="count-all">6</span>)
+            </button>
+            <button onclick="filterMembers('active')" id="filter-active" class="filter-pill px-3 py-1.5 rounded-xl text-xs font-medium bg-white/5 text-slate-300 border border-white/10 hover:border-cyan-500/40 transition">
+              Active (<span id="count-active">4</span>)
+            </button>
+            <button onclick="filterMembers('expiring')" id="filter-expiring" class="filter-pill px-3 py-1.5 rounded-xl text-xs font-medium bg-white/5 text-slate-300 border border-white/10 hover:border-amber-500/40 transition">
+              Expiring (<span id="count-expiring">1</span>)
+            </button>
+            <button onclick="filterMembers('expired')" id="filter-expired" class="filter-pill px-3 py-1.5 rounded-xl text-xs font-medium bg-white/5 text-slate-300 border border-white/10 hover:border-rose-500/40 transition">
+              Expired (<span id="count-expired">1</span>)
+            </button>
+          </div>
+        </div>
+
+        <!-- Members Count Summary -->
+        <div class="flex items-center justify-between px-1 text-[11px] text-slate-400">
+          <span id="members-list-subtitle" class="font-mono">Showing 6 gym members</span>
+          <button onclick="openModal('add-member-modal')" class="text-cyan-400 font-bold hover:underline flex items-center gap-1">
+            + New Member
+          </button>
+        </div>
+
+        <!-- Members Card List -->
+        <div id="members-cards-container" class="space-y-2.5">
+          <!-- Populated by JavaScript -->
+        </div>
+
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 3: PLANS & SUBSCRIPTIONS -->
+      <!-- ============================================================ -->
+      <section id="tab-plans" class="p-4 space-y-4 hidden">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-sm font-extrabold text-white">Membership Tiers</h3>
+            <p class="text-xs text-slate-400">Configured gym packages & pricing</p>
+          </div>
+          <button onclick="showToast('Custom plan creator available in Pro dashboard')" class="px-3 py-1.5 text-xs bg-white/5 hover:bg-white/10 text-cyan-300 border border-cyan-500/30 rounded-xl font-semibold backdrop-blur-md shadow-sm">
+            + Custom Plan
+          </button>
+        </div>
+
+        <div class="space-y-3.5">
+          <!-- Plan 1 -->
+          <div class="p-4.5 rounded-3xl glass-card relative overflow-hidden">
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="px-2 py-0.5 text-[9px] font-mono font-bold bg-white/10 text-slate-300 rounded-md uppercase">Standard</span>
+                <h4 class="text-base font-bold text-white mt-1.5">Monthly Fitness</h4>
+                <p class="text-xs text-slate-400 mt-0.5">30 Days Full Gym Access + Locker</p>
+              </div>
+              <div class="text-right">
+                <span class="text-2xl font-black text-cyan-400 font-mono">$35</span>
+                <span class="text-xs text-slate-400">/mo</span>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+              <span class="font-mono">Subscribers: <strong class="text-white">142 members</strong></span>
+              <button onclick="quickAssignPlan('Monthly Fitness', 35)" class="px-3 py-1.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 text-xs font-bold transition shadow-[0_0_12px_rgba(6,182,212,0.2)]">
+                Assign Plan
+              </button>
+            </div>
+          </div>
+
+          <!-- Plan 2 (Most Popular Neon Highlight) -->
+          <div class="p-5 rounded-3xl glass-card relative overflow-hidden border-cyan-400/50 shadow-[0_0_30px_rgba(6,182,212,0.25)]">
+            <span class="absolute top-0 right-0 bg-gradient-to-l from-cyan-400 via-teal-300 to-emerald-400 text-slate-950 text-[9px] font-black px-3.5 py-1 rounded-bl-2xl uppercase tracking-wider shadow">
+              ★ MOST POPULAR
+            </span>
+            <div class="flex justify-between items-start pt-1">
+              <div>
+                <span class="px-2 py-0.5 text-[9px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 rounded-md uppercase">Quarterly</span>
+                <h4 class="text-lg font-black text-white mt-1.5">3 Months Pro</h4>
+                <p class="text-xs text-slate-300/80 mt-0.5">90 Days Gym + Free Sauna Session</p>
+              </div>
+              <div class="text-right pt-3">
+                <span class="text-2xl font-black text-cyan-300 font-mono">$90</span>
+                <span class="text-xs text-slate-400">/3mo</span>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+              <span class="font-mono">Subscribers: <strong class="text-white">76 members</strong></span>
+              <button onclick="quickAssignPlan('3 Months Pro', 90)" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-cyan-400 to-teal-300 hover:from-cyan-300 hover:to-teal-200 text-slate-950 font-black text-xs transition shadow-[0_0_15px_rgba(6,182,212,0.5)]">
+                Assign Plan
+              </button>
+            </div>
+          </div>
+
+          <!-- Plan 3 (VIP Purple Neon) -->
+          <div class="p-4.5 rounded-3xl glass-card relative overflow-hidden border-purple-500/30">
+            <div class="flex justify-between items-start">
+              <div>
+                <span class="px-2 py-0.5 text-[9px] font-mono font-bold bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30 rounded-md uppercase">VIP Annual</span>
+                <h4 class="text-base font-bold text-white mt-1.5">1 Year Champion</h4>
+                <p class="text-xs text-slate-400 mt-0.5">365 Days Access + 2 PT Sessions</p>
+              </div>
+              <div class="text-right">
+                <span class="text-2xl font-black text-fuchsia-400 font-mono">$320</span>
+                <span class="text-xs text-slate-400">/yr</span>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+              <span class="font-mono">Subscribers: <strong class="text-white">30 members</strong></span>
+              <button onclick="quickAssignPlan('1 Year Champion', 320)" class="px-3 py-1.5 rounded-xl bg-fuchsia-500/20 hover:bg-fuchsia-500/30 text-fuchsia-300 border border-fuchsia-500/40 text-xs font-bold transition shadow-[0_0_12px_rgba(217,70,239,0.3)]">
+                Assign Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 4: PAYMENTS & REVENUE -->
+      <!-- ============================================================ -->
+      <section id="tab-payments" class="p-4 space-y-4 hidden">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-sm font-extrabold text-white">Payment Ledger</h3>
+            <p class="text-xs text-slate-400">Cash, Card, & Wire transactions</p>
+          </div>
+          <button onclick="openModal('record-payment-modal')" class="px-3 py-1.5 text-xs bg-gradient-to-r from-cyan-500 to-teal-400 hover:from-cyan-400 hover:to-teal-300 text-slate-950 rounded-xl font-bold shadow-[0_0_15px_rgba(6,182,212,0.4)] transition">
+            + Record
+          </button>
+        </div>
+
+        <!-- Payment Breakdown Cards (Tri-Neon Glass) -->
+        <div class="grid grid-cols-3 gap-2.5">
+          <div class="p-3 rounded-2xl glass-card text-center border-emerald-500/20">
+            <span class="text-[10px] font-mono font-semibold text-emerald-400 uppercase">Cash</span>
+            <div class="text-sm font-extrabold text-white mt-1 font-mono">$8,420</div>
+          </div>
+          <div class="p-3 rounded-2xl glass-card text-center border-cyan-500/20">
+            <span class="text-[10px] font-mono font-semibold text-cyan-400 uppercase">Card</span>
+            <div class="text-sm font-extrabold text-white mt-1 font-mono">$4,330</div>
+          </div>
+          <div class="p-3 rounded-2xl glass-card text-center border-fuchsia-500/20">
+            <span class="text-[10px] font-mono font-semibold text-fuchsia-400 uppercase">Wire</span>
+            <div class="text-sm font-extrabold text-white mt-1 font-mono">$1,500</div>
+          </div>
+        </div>
+
+        <!-- Transactions List -->
+        <div class="space-y-2.5">
+          <div class="flex justify-between items-center px-1">
+            <span class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Transactions</span>
+            <span class="text-[10px] font-mono text-cyan-400" id="payment-tx-count">6 records</span>
+          </div>
+
+          <div id="payments-history-list" class="space-y-2">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar (Frosted Floating Glass) -->
+    <nav class="absolute bottom-0 left-0 right-0 h-16 bg-slate-950/75 backdrop-blur-2xl border-t border-white/10 flex items-center justify-around px-2 z-30 select-none">
+      
+      <!-- Dashboard Tab -->
+      <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn active flex flex-col items-center justify-center gap-1 w-16 py-1 text-cyan-400 transition-all">
+        <div class="relative">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span class="nav-glow absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-1 bg-cyan-400 rounded-full blur-[2px]"></span>
+        </div>
+        <span class="text-[10px] font-bold tracking-tight">Dashboard</span>
+      </button>
+
+      <!-- Members Tab -->
+      <button onclick="switchTab('members')" id="nav-members" class="nav-btn flex flex-col items-center justify-center gap-1 w-16 py-1 text-slate-400 hover:text-slate-200 transition-all">
+        <div class="relative">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <span class="nav-glow hidden absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-1 bg-cyan-400 rounded-full blur-[2px]"></span>
+        </div>
+        <span class="text-[10px] font-medium tracking-tight">Members</span>
+      </button>
+
+      <!-- Plans Tab -->
+      <button onclick="switchTab('plans')" id="nav-plans" class="nav-btn flex flex-col items-center justify-center gap-1 w-16 py-1 text-slate-400 hover:text-slate-200 transition-all">
+        <div class="relative">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          <span class="nav-glow hidden absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-1 bg-cyan-400 rounded-full blur-[2px]"></span>
+        </div>
+        <span class="text-[10px] font-medium tracking-tight">Plans</span>
+      </button>
+
+      <!-- Payments Tab -->
+      <button onclick="switchTab('payments')" id="nav-payments" class="nav-btn flex flex-col items-center justify-center gap-1 w-16 py-1 text-slate-400 hover:text-slate-200 transition-all">
+        <div class="relative">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          <span class="nav-glow hidden absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-1 bg-cyan-400 rounded-full blur-[2px]"></span>
+        </div>
+        <span class="text-[10px] font-medium tracking-tight">Ledger</span>
+      </button>
+
+    </nav>
+
+    <!-- Floating Neon Toast Notification -->
+    <div id="toast-notification" class="absolute top-16 left-4 right-4 bg-slate-900/90 border border-cyan-400/50 backdrop-blur-2xl text-cyan-300 font-bold text-xs px-4 py-3 rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.45)] flex items-center justify-between opacity-0 pointer-events-none transition-all duration-300 z-50">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.9)] animate-ping"></span>
+        <span id="toast-message">Operation successful</span>
+      </div>
+      <button onclick="hideToast()" class="text-slate-400 hover:text-white font-bold ml-2">✕</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODAL 1: ADD MEMBER (Frosted Glass Sheet) -->
+    <!-- ============================================================ -->
+    <div id="add-member-modal" class="absolute inset-0 bg-black/80 backdrop-blur-md z-40 hidden flex items-end justify-center">
+      <div class="w-full bg-slate-950/85 border-t border-cyan-500/30 rounded-t-[36px] p-5 space-y-3.5 max-h-[85%] overflow-y-auto shadow-[0_-15px_50px_rgba(6,182,212,0.2)]">
+        <div class="flex justify-between items-center">
+          <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span>
+            Register New Member
+          </h3>
+          <button onclick="closeModal('add-member-modal')" class="text-slate-400 hover:text-white p-1">✕</button>
+        </div>
+
+        <form id="add-member-form" onsubmit="submitNewMember(event)" class="space-y-3 text-xs">
+          <div>
+            <label class="block text-slate-400 font-medium mb-1">Full Name *</label>
+            <input id="new-member-name" required type="text" placeholder="e.g. Youssef El Mansouri" class="w-full glass-input text-white rounded-xl px-3.5 py-2.5 focus:outline-none transition">
+          </div>
+
+          <div>
+            <label class="block text-slate-400 font-medium mb-1">Phone Number *</label>
+            <input id="new-member-phone" required type="tel" placeholder="+212 600 123456" class="w-full glass-input text-white rounded-xl px-3.5 py-2.5 focus:outline-none transition">
+          </div>
+
+          <div>
+            <label class="block text-slate-400 font-medium mb-1">Select Membership Plan</label>
+            <select id="new-member-plan" class="w-full glass-input text-white rounded-xl px-3.5 py-2.5 focus:outline-none transition bg-slate-900">
+              <option value="Monthly Fitness ($35)">Monthly Fitness — $35 / 30 days</option>
+              <option value="3 Months Pro ($90)" selected>3 Months Pro — $90 / 90 days (Popular)</option>
+              <option value="1 Year Champion ($320)">1 Year Champion — $320 / 365 days (VIP)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-slate-400 font-medium mb-1">Payment Method</label>
+            <div class="grid grid-cols-3 gap-2">
+              <label class="flex items-center justify-center gap-1.5 p-2 bg-white/5 rounded-xl border border-white/10 hover:border-cyan-400/50 cursor-pointer transition">
+                <input type="radio" name="pay-method" value="Cash" checked class="accent-cyan-400">
+                <span class="text-slate-300 font-semibold">Cash</span>
+              </label>
+              <label class="flex items-center justify-center gap-1.5 p-2 bg-white/5 rounded-xl border border-white/10 hover:border-cyan-400/50 cursor-pointer transition">
+                <input type="radio" name="pay-method" value="Card" class="accent-cyan-400">
+                <span class="text-slate-300 font-semibold">Card</span>
+              </label>
+              <label class="flex items-center justify-center gap-1.5 p-2 bg-white/5 rounded-xl border border-white/10 hover:border-cyan-400/50 cursor-pointer transition">
+                <input type="radio" name="pay-method" value="Transfer" class="accent-cyan-400">
+                <span class="text-slate-300 font-semibold">Wire</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="pt-2 flex gap-2">
+            <button type="button" onclick="closeModal('add-member-modal')" class="flex-1 py-2.5 bg-white/5 hover:bg-white/10 text-slate-300 font-semibold rounded-xl border border-white/10 transition">
+              Cancel
+            </button>
+            <button type="submit" class="flex-1 py-2.5 bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 text-slate-950 font-black rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.5)] transition">
+              Save & Activate
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODAL 2: RECORD PAYMENT / RENEWAL -->
+    <!-- ============================================================ -->
+    <div id="record-payment-modal" class="absolute inset-0 bg-black/80 backdrop-blur-md z-40 hidden flex items-end justify-center">
+      <div class="w-full bg-slate-950/85 border-t border-fuchsia-500/30 rounded-t-[36px] p-5 space-y-3.5 max-h-[85%] overflow-y-auto shadow-[0_-15px_50px_rgba(217,70,239,0.2)]">
+        <div class="flex justify-between items-center">
+          <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-fuchsia-400 shadow-[0_0_8px_rgba(217,70,239,0.8)]"></span>
+            Record Membership Payment
+          </h3>
+          <button onclick="closeModal('record-payment-modal')" class="text-slate-400 hover:text-white p-1">✕</button>
+        </div>
+
+        <form onsubmit="submitPayment(event)" class="space-y-3 text-xs">
+          <div>
+            <label class="block text-slate-400 font-medium mb-1">Select Member</label>
+            <select id="payment-member-select" class="w-full glass-input text-white rounded-xl px-3.5 py-2.5 focus:outline-none transition bg-slate-900"></select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-slate-400 font-medium mb-1">Amount ($ USD)</label>
+              <input id="payment-amount" type="number" value="35" min="5" step="5" required class="w-full glass-input text-white rounded-xl px-3.5 py-2.5 focus:outline-none transition font-mono font-bold text-cyan-300">
+            </div>
+            <div>
+              <label class="block text-slate-400 font-medium mb-1">Extension</label>
+              <select id="payment-extend-days" class="w-full glass-input text-white rounded-xl px-3.5 py-2.5 focus:outline-none transition bg-slate-900">
+                <option value="30">+30 Days</option>
+                <option value="90">+90 Days</option>
+                <option value="365">+1 Year</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-slate-400 font-medium mb-1">Payment Method</label>
+            <select id="payment-method-select" class="w-full glass-input text-white rounded-xl px-3.5 py-2.5 focus:outline-none transition bg-slate-900">
+              <option value="Cash">Cash (Gym Counter)</option>
+              <option value="Card">Credit / Debit Card</option>
+              <option value="Transfer">Bank Transfer</option>
+            </select>
+          </div>
+
+          <div class="pt-2 flex gap-2">
+            <button type="button" onclick="closeModal('record-payment-modal')" class="flex-1 py-2.5 bg-white/5 hover:bg-white/10 text-slate-300 font-semibold rounded-xl border border-white/10 transition">
+              Cancel
+            </button>
+            <button type="submit" class="flex-1 py-2.5 bg-gradient-to-r from-fuchsia-500 to-cyan-400 hover:from-fuchsia-400 hover:to-cyan-300 text-slate-950 font-black rounded-xl shadow-[0_0_20px_rgba(217,70,239,0.5)] transition">
+              Confirm Payment
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODAL 3: MEMBER DETAIL SHEET -->
+    <!-- ============================================================ -->
+    <div id="member-detail-modal" class="absolute inset-0 bg-black/85 backdrop-blur-lg z-40 hidden flex items-end justify-center">
+      <div class="w-full bg-slate-950/90 border-t border-cyan-500/40 rounded-t-[36px] p-5 space-y-4 max-h-[90%] overflow-y-auto shadow-[0_-15px_50px_rgba(6,182,212,0.25)]">
+        <div class="flex justify-between items-start">
+          <div class="flex items-center gap-3">
+            <div id="modal-member-avatar" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500/20 to-fuchsia-500/20 text-cyan-300 border border-cyan-400/40 flex items-center justify-center text-lg font-black shadow-[0_0_15px_rgba(6,182,212,0.3)]">
+              Y
+            </div>
+            <div>
+              <h3 id="modal-member-name" class="text-base font-extrabold text-white">Youssef Mansouri</h3>
+              <p id="modal-member-phone" class="text-xs text-slate-400 font-mono">+212 612 345678</p>
+            </div>
+          </div>
+          <button onclick="closeModal('member-detail-modal')" class="text-slate-400 hover:text-white p-1">✕</button>
+        </div>
+
+        <!-- Status Card -->
+        <div class="p-4 glass-card rounded-2xl space-y-2.5">
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-slate-400 font-medium">Subscription Status:</span>
+            <span id="modal-member-badge" class="px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.3)]">ACTIVE</span>
+          </div>
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-slate-400 font-medium">Active Package:</span>
+            <span id="modal-member-plan" class="text-white font-semibold">3 Months Pro</span>
+          </div>
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-slate-400 font-medium">Valid Until:</span>
+            <span id="modal-member-date" class="text-cyan-300 font-mono font-bold">Nov 28, 2026</span>
+          </div>
+        </div>
+
+        <!-- Quick Actions Inside Detail -->
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <button id="modal-renew-btn" onclick="openRenewalForCurrentMember()" class="py-2.5 bg-gradient-to-r from-cyan-400 to-teal-300 hover:from-cyan-300 hover:to-teal-200 text-slate-950 font-black rounded-xl transition shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+            ⚡ Quick Renew
+          </button>
+          <button onclick="showToast('WhatsApp reminder sent to member!')" class="py-2.5 bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 font-semibold rounded-xl transition">
+            💬 WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Pitch Value Highlights (Below Device) -->
+  <footer class="w-full max-w-4xl mt-6 p-4 rounded-2xl glass-card text-xs text-slate-400 flex flex-wrap items-center justify-between gap-4">
+    <div class="flex items-center gap-6">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span>
+        <span>Glassmorphic Depth & Micro-interactions</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-fuchsia-400 shadow-[0_0_8px_rgba(217,70,239,0.8)]"></span>
+        <span>Dark Cyber Neon Aesthetic</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+        <span>Zero-latency Client Flow</span>
+      </div>
+    </div>
+    <div class="text-slate-500 font-mono">
+      G.manager • Hackathon Prototype
+    </div>
+  </footer>
+
+  <script>
+    const INITIAL_MEMBERS = [
+      { id: 1, name: 'Karim Benali', phone: '+212 661 223344', plan: '3 Months Pro', status: 'active', endDate: 'Dec 15, 2026', totalPaid: 180 },
+      { id: 2, name: 'Sara Tazi', phone: '+212 662 334455', plan: 'Monthly Fitness', status: 'expiring', endDate: 'Nov 04, 2026', totalPaid: 70 },
+      { id: 3, name: 'Omar Idrissi', phone: '+212 663 445566', plan: '1 Year Champion', status: 'active', endDate: 'Jul 10, 2027', totalPaid: 320 },
+      { id: 4, name: 'Fatima Zahra', phone: '+212 664 556677', plan: 'Monthly Fitness', status: 'expired', endDate: 'Oct 28, 2026', totalPaid: 35 },
+      { id: 5, name: 'Mehdi Alami', phone: '+212 665 667788', plan: '3 Months Pro', status: 'active', endDate: 'Jan 20, 2027', totalPaid: 90 },
+      { id: 6, name: 'Hajar Chraibi', phone: '+212 666 778899', plan: 'Monthly Fitness', status: 'active', endDate: 'Nov 29, 2026', totalPaid: 35 }
+    ];
+
+    const INITIAL_PAYMENTS = [
+      { id: 101, memberName: 'Karim Benali', amount: 90, plan: '3 Months Pro', method: 'Cash', date: 'Today, 09:15 AM' },
+      { id: 102, memberName: 'Mehdi Alami', amount: 90, plan: '3 Months Pro', method: 'Card', date: 'Yesterday' },
+      { id: 103, memberName: 'Omar Idrissi', amount: 320, plan: '1 Year Champion', method: 'Wire', date: 'Oct 30, 2026' },
+      { id: 104, memberName: 'Hajar Chraibi', amount: 35, plan: 'Monthly Fitness', method: 'Cash', date: 'Oct 29, 2026' },
+      { id: 105, memberName: 'Sara Tazi', amount: 35, plan: 'Monthly Fitness', method: 'Cash', date: 'Oct 04, 2026' }
+    ];
+
+    let members = JSON.parse(JSON.stringify(INITIAL_MEMBERS));
+    let payments = JSON.parse(JSON.stringify(INITIAL_PAYMENTS));
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let selectedMember = null;
+    let isFullView = false;
+
+    function updateClock() {
+      const now = new Date();
+      const hrs = String(now.getHours()).padStart(2, '0');
+      const mins = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById('current-clock');
+      if (el) el.textContent = `${hrs}:${mins}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function toggleDeviceFrame() {
+      const container = document.getElementById('device-container');
+      const btn = document.getElementById('toggle-device-btn');
+      isFullView = !isFullView;
+
+      if (isFullView) {
+        container.classList.remove('max-w-[400px]', 'h-[820px]', 'rounded-[50px]', 'border-[8px]');
+        container.classList.add('max-w-4xl', 'h-[860px]', 'rounded-3xl', 'border-2');
+        btn.querySelector('span').textContent = 'Phone Size View';
+      } else {
+        container.classList.add('max-w-[400px]', 'h-[820px]', 'rounded-[50px]', 'border-[8px]');
+        container.classList.remove('max-w-4xl', 'h-[860px]', 'rounded-3xl', 'border-2');
+        btn.querySelector('span').textContent = 'Toggle Frame / Full View';
+      }
+    }
+
+    function switchTab(tabName) {
+      const tabs = ['dashboard', 'members', 'plans', 'payments'];
+      tabs.forEach(tab => {
+        const section = document.getElementById(`tab-${tab}`);
+        const navBtn = document.getElementById(`nav-${tab}`);
+        const glow = navBtn.querySelector('.nav-glow');
+        if (tab === tabName) {
+          section.classList.remove('hidden');
+          navBtn.classList.add('text-cyan-400');
+          navBtn.classList.remove('text-slate-400');
+          if (glow) glow.classList.remove('hidden');
+        } else {
+          section.classList.add('hidden');
+          navBtn.classList.remove('text-cyan-400');
+          navBtn.classList.add('text-slate-400');
+          if (glow) glow.classList.add('hidden');
+        }
+      });
+      document.getElementById('screen-container').scrollTop = 0;
+    }
+
+    function filterMembers(status) {
+      currentFilter = status;
+      document.querySelectorAll('.filter-pill').forEach(btn => {
+        btn.classList.remove('bg-cyan-500', 'text-slate-950', 'font-bold', 'shadow-[0_0_15px_rgba(6,182,212,0.4)]');
+        btn.classList.add('bg-white/5', 'text-slate-300', 'font-medium', 'border', 'border-white/10');
+      });
+      const activeBtn = document.getElementById(`filter-${status}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-white/5', 'text-slate-300', 'font-medium', 'border', 'border-white/10');
+        activeBtn.classList.add('bg-cyan-500', 'text-slate-950', 'font-bold', 'shadow-[0_0_15px_rgba(6,182,212,0.4)]');
+      }
+      renderMembersList();
+    }
+
+    function handleMemberSearch(val) {
+      searchQuery = val.toLowerCase().trim();
+      renderMembersList();
+    }
+
+    function renderMembersList() {
+      const container = document.getElementById('members-cards-container');
+      const filtered = members.filter(m => {
+        const matchesStatus = currentFilter === 'all' || m.status === currentFilter;
+        const matchesSearch = !searchQuery || m.name.toLowerCase().includes(searchQuery) || m.phone.includes(searchQuery);
+        return matchesStatus && matchesSearch;
+      });
+
+      document.getElementById('count-all').textContent = members.length;
+      document.getElementById('count-active').textContent = members.filter(m => m.status === 'active').length;
+      document.getElementById('count-expiring').textContent = members.filter(m => m.status === 'expiring').length;
+      document.getElementById('count-expired').textContent = members.filter(m => m.status === 'expired').length;
+      document.getElementById('members-list-subtitle').textContent = `Showing ${filtered.length} of ${members.length} gym members`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center glass-card rounded-2xl">
+            <p class="text-sm text-slate-400">No members match your criteria</p>
+            <button onclick="searchQuery=''; document.getElementById('member-search-input').value=''; filterMembers('all');" class="mt-2 text-xs text-cyan-400 font-bold underline">
+              Clear search & filters
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(m => {
+        let badgeStyle = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.3)]';
+        let badgeText = 'ACTIVE';
+        if (m.status === 'expiring') {
+          badgeStyle = 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-[0_0_10px_rgba(245,158,11,0.3)]';
+          badgeText = 'EXPIRING';
+        } else if (m.status === 'expired') {
+          badgeStyle = 'bg-rose-500/20 text-rose-300 border-rose-500/40 shadow-[0_0_10px_rgba(244,63,94,0.3)]';
+          badgeText = 'EXPIRED';
+        }
+
+        const initial = m.name.charAt(0);
+
+        return `
+          <div onclick="openMemberDetail(${m.id})" class="p-3.5 glass-card-interactive rounded-2xl flex items-center justify-between cursor-pointer">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500/20 to-purple-500/20 border border-white/10 text-cyan-300 font-black flex items-center justify-center text-sm shadow">
+                ${initial}
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+                  ${m.name}
+                </h4>
+                <p class="text-[11px] text-slate-400 font-medium">${m.plan} • <span class="font-mono text-slate-400">${m.phone}</span></p>
+              </div>
+            </div>
+
+            <div class="text-right">
+              <span class="px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold border ${badgeStyle}">
+                ${badgeText}
+              </span>
+              <p class="text-[10px] text-slate-400 mt-1 font-mono">${m.endDate}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const selectEl = document.getElementById('payment-member-select');
+      if (selectEl) {
+        selectEl.innerHTML = members.map(m => `<option value="${m.id}">${m.name} (${m.plan})</option>`).join('');
+      }
+    }
+
+    function renderRecentActivity() {
+      const container = document.getElementById('recent-activity-list');
+      const recent = payments.slice(0, 4);
+
+      container.innerHTML = recent.map(p => `
+        <div class="p-3 rounded-2xl glass-card flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500/20 to-emerald-500/20 border border-cyan-500/30 text-cyan-300 flex items-center justify-center text-xs font-black shadow-[0_0_8px_rgba(6,182,212,0.2)]">
+              +$
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-100">${p.memberName}</p>
+              <p class="text-[10px] text-slate-400">${p.plan} • <span class="text-cyan-300 font-mono">${p.method}</span></p>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-xs font-black text-emerald-400 font-mono shadow-[0_0_8px_rgba(16,185,129,0.3)]">+$${p.amount}</span>
+            <p class="text-[9px] text-slate-400 font-mono">${p.date}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderPaymentsHistory() {
+      const container = document.getElementById('payments-history-list');
+      document.getElementById('payment-tx-count').textContent = `${payments.length} records`;
+
+      container.innerHTML = payments.map(p => `
+        <div class="p-3.5 rounded-2xl glass-card flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-extrabold text-white">${p.memberName}</span>
+              <span class="px-2 py-0.5 text-[9px] font-mono font-bold bg-white/10 text-cyan-300 rounded-md border border-white/5">${p.method}</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-0.5 font-medium">${p.plan}</p>
+          </div>
+          <div class="text-right">
+            <span class="text-sm font-black text-cyan-300 font-mono">+$${p.amount}</span>
+            <p class="text-[10px] text-slate-400 font-mono">${p.date}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openMemberDetail(memberId) {
+      const member = members.find(m => m.id === memberId);
+      if (!member) return;
+      selectedMember = member;
+
+      document.getElementById('modal-member-name').textContent = member.name;
+      document.getElementById('modal-member-phone').textContent = member.phone;
+      document.getElementById('modal-member-plan').textContent = member.plan;
+      document.getElementById('modal-member-date').textContent = member.endDate;
+      document.getElementById('modal-member-avatar').textContent = member.name.charAt(0);
+
+      const badge = document.getElementById('modal-member-badge');
+      if (member.status === 'active') {
+        badge.className = 'px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.3)]';
+        badge.textContent = 'ACTIVE';
+      } else if (member.status === 'expiring') {
+        badge.className = 'px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-[0_0_10px_rgba(245,158,11,0.3)]';
+        badge.textContent = 'EXPIRING';
+      } else {
+        badge.className = 'px-2.5 py-0.5 rounded-full font-bold text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/40 shadow-[0_0_10px_rgba(244,63,94,0.3)]';
+        badge.textContent = 'EXPIRED';
+      }
+
+      openModal('member-detail-modal');
+    }
+
+    function openRenewalForCurrentMember() {
+      closeModal('member-detail-modal');
+      if (selectedMember) {
+        document.getElementById('payment-member-select').value = selectedMember.id;
+      }
+      openModal('record-payment-modal');
+    }
+
+    function quickAssignPlan(planName, price) {
+      document.getElementById('payment-amount').value = price;
+      openModal('record-payment-modal');
+      showToast(`Selected ${planName} ($${price})`);
+    }
+
+    function submitNewMember(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-member-name').value.trim();
+      const phone = document.getElementById('new-member-phone').value.trim();
+      const planStr = document.getElementById('new-member-plan').value;
+      const method = document.querySelector('input[name="pay-method"]:checked').value;
+
+      if (!name || !phone) return;
+
+      const newId = members.length + 1;
+      const newMember = {
+        id: newId,
+        name: name,
+        phone: phone,
+        plan: planStr.split(' (')[0],
+        status: 'active',
+        endDate: 'Jan 28, 2027',
+        totalPaid: 90
+      };
+
+      members.unshift(newMember);
+
+      payments.unshift({
+        id: Date.now(),
+        memberName: name,
+        amount: 90,
+        plan: newMember.plan,
+        method: method,
+        date: 'Just now'
+      });
+
+      const currentRev = parseInt(document.getElementById('dash-revenue').textContent.replace('$', '').replace(',', '').replace('USD', '').trim());
+      document.getElementById('dash-revenue').innerHTML = `$${(currentRev + 90).toLocaleString()} <span class="text-xs font-mono font-normal text-slate-400">USD</span>`;
+      document.getElementById('dash-active-count').textContent = members.filter(m => m.status === 'active').length;
+
+      closeModal('add-member-modal');
+      document.getElementById('add-member-form').reset();
+
+      renderMembersList();
+      renderRecentActivity();
+      renderPaymentsHistory();
+
+      showToast(`⚡ Member "${name}" registered with active plan!`);
+      switchTab('members');
+    }
+
+    function submitPayment(e) {
+      e.preventDefault();
+      const memberId = parseInt(document.getElementById('payment-member-select').value);
+      const amount = parseFloat(document.getElementById('payment-amount').value);
+      const method = document.getElementById('payment-method-select').value;
+
+      const member = members.find(m => m.id === memberId);
+      if (!member) return;
+
+      member.status = 'active';
+      member.endDate = 'Dec 31, 2026';
+      member.totalPaid += amount;
+
+      payments.unshift({
+        id: Date.now(),
+        memberName: member.name,
+        amount: amount,
+        plan: member.plan,
+        method: method,
+        date: 'Just now'
+      });
+
+      const currentRev = parseInt(document.getElementById('dash-revenue').textContent.replace('$', '').replace(',', '').replace('USD', '').trim());
+      document.getElementById('dash-revenue').innerHTML = `$${(currentRev + amount).toLocaleString()} <span class="text-xs font-mono font-normal text-slate-400">USD</span>`;
+
+      closeModal('record-payment-modal');
+      renderMembersList();
+      renderRecentActivity();
+      renderPaymentsHistory();
+
+      showToast(`💳 Payment of $${amount} recorded for ${member.name}!`);
+    }
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('hidden');
+    }
+
+    let toastTimeout;
+    function showToast(msg) {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-message').textContent = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(hideToast, 3500);
+    }
+
+    function hideToast() {
+      const toast = document.getElementById('toast-notification');
+      toast.classList.add('opacity-0', 'pointer-events-none');
+      toast.classList.remove('opacity-100');
+    }
+
+    function triggerNotificationToast() {
+      showToast('🔔 3 Members have subscriptions expiring today');
+    }
+
+    function resetDemoData() {
+      members = JSON.parse(JSON.stringify(INITIAL_MEMBERS));
+      payments = JSON.parse(JSON.stringify(INITIAL_PAYMENTS));
+      document.getElementById('dash-revenue').innerHTML = '$14,250 <span class="text-xs font-mono font-normal text-slate-400">USD</span>';
+      document.getElementById('dash-active-count').textContent = '248';
+      document.getElementById('dash-expiring-count').textContent = '14';
+      filterMembers('all');
+      renderRecentActivity();
+      renderPaymentsHistory();
+      showToast('Prototype data reset to initial demo state');
+    }
+
+    renderMembersList();
+    renderRecentActivity();
+    renderPaymentsHistory();
+  </script>
+</body>
+</html>
